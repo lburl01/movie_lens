@@ -1,0 +1,32 @@
+header {
+  position: relative;
+  background: black;
+  color: white;
+  text-align: center;
+  line-height: 0;
+  background: $dark-color;
+
+
+  .corner {
+    background: $dark-color;
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    &.left {
+      left: 0;
+    }
+
+    &.right{
+      right: 0;
+    }
+  }
+
+}
+
+header * {
+  display: inline-block;
+  button {
+    height: 50%;
+    margin: 5.5% 0;
+  }
+}
