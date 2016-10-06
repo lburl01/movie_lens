@@ -22,42 +22,55 @@
             <button id="login-button" type="buton">LOGIN</button>
         </div>
 
-      </header>
-      <main>
+    </header>
+    <main>
         <div id="hero">
 
-          <div id="search-section">
-            <form id="search-form" method="get">
-              <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
-            </form>
-          </div>
+            <div id="search-section">
+                <form id="search-form" method="get">
+                    <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
+                </form>
+            </div>
 
         </div>
         <div class="content-container">
-          <div class="content">
-            <!-- TEMPLATES USED HERE -->
+            <div class="content">
+                <!-- TEMPLATES USED HERE -->
+                <div id="user-info-container">
+                    <div id="user-info">
+                        <h2>User Name</h2>
+                        <ul class="rated-movies-list">Movies Rated</ul>
+                        <li>
+                            <div id="rated-movie-container">
+                                <span>Movie 1</span>
+                                <span id="star-container">
+                                <img class="star" src="images/star.png">
+                                <img class="star" src="images/outline_star.png">
+                                <img class="star" src="images/outline_star.png">
+                                <img class="star" src="images/outline_star.png">
+                                <img class="star" src="images/outline_star.png">
+                              </span>
+                                <p id="rated-movie-info">Here is some random movie info.</p>
+                            </div>
+                        </li>
+                        </ul>
+                    </div>
+
+                </div>
 
 
-
-
-
-
-
-
-
-
-          </div>
+            </div>
         </div>
 
-      </main>
+    </main>
 
 
-<!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
+    <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
 
 
-        <script src="js/jquery-3.1.1.js"></script>
-        <script src="js/handlebars-v4.0.5.js"></script>
-        <script src="js/main.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

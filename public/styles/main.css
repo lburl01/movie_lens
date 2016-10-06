@@ -49,6 +49,29 @@ header * {
       padding: 5px; }
 
 * {
+  list-style: none; }
+
+#user-info-container {
+  position: absolute;
+  background: pink;
+  width: 70%; }
+
+h2 {
+  text-align: center; }
+
+.rated-movies-list {
+  padding: 0;
+  text-align: center; }
+
+#rated-movie-container {
+  width: 70%;
+  background: red;
+  transform: translateX(23%); }
+
+.star {
+  height: 14px; }
+
+* {
   font-family: sans-serif;
   font-weight: 100;
   box-sizing: border-box; }
