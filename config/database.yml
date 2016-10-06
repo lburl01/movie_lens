@@ -1,0 +1,6 @@
+host: 'localhost'
+adapter: 'postgresql'
+database: 'movie_lens'
+username: 'loriburleson'
+encoding: 'utf8'
+pool: 5
