@@ -1,1 +1,95 @@
-// styles?
+$red-color: #560001;
+$beige-color: #dacba9;
+$dark-color: #0b0004;
+
+* {
+  font-family: sans-serif;
+  font-weight: 100;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 15%;
+}
+
+button {
+  border-radius: 5px;
+  background: $beige-color;
+  border: none;
+  color: $red-color;
+}
+
+header {
+  position: relative;
+  background: black;
+  color: white;
+  text-align: center;
+  line-height: 0;
+  background: $dark-color;
+
+  h1 {
+    color: $beige-color;
+  }
+
+  .corner {
+    background: $dark-color;
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    &.left {
+      left: 0;
+    }
+
+    &.right{
+      right: 0;
+    }
+  }
+
+}
+
+header * {
+  display: inline-block;
+  button {
+    height: 50%;
+    margin: 5.5% 0;
+  }
+}
+
+
+
+
+
+
+#hero {
+  background: url('../images/hero.jpg');
+  background-size: 110%;
+  background-repeat: no-repeat;
+  background-position: 73% 47%;
+  width: 100%;
+  text-align: center;
+
+  #input-field{
+    font-size: 2em;
+    background: transparent;
+    border: none;
+    color: black;
+    text-align: center;
+    width: 50%;
+    &::-webkit-input-placeholder {
+      color: $red-color;
+    }
+    &:focus{
+      outline: none;
+    }
+    &.open {
+      margin: 190px 0;
+      transition: all ease 1s;
+      padding: 20px;
+    }
+    &.closed {
+      margin: 0px 0;
+      transition: all ease 1s;
+      padding: 5px;
+    }
+  }
+}

@@ -1,21 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title>Movie Lens</title>
+    <title>The Movie Lens Viewer</title>
     <link href="styles/main.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+</head>
+
+<body>
+    <header>
+        <div class="corner left">
+            <button id="top-rated" type="button">
+        Top Rated
+      </button>
+        </div>
+
+        <h1>THE MOVIE LENS</h1>
+
+        <div class="corner right">
+            <input id="login-field" type="text" placeholder="username"></input>
+            <button id="login-button" type="buton">LOGIN</button>
+        </div>
+
+      </header>
+      <main>
+        <div id="hero">
+
+          <div id="search-section">
+            <form id="search-form" method="get">
+              <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
+            </form>
+          </div>
+
+        </div>
+
+      </main>
 
 
 
+        <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/handlebars-v4.0.5.js"></script>
+        <script src="js/main.js"></script>
+</body>
 
-
-
-
-
-  <script src="js/jquery-3.1.1.js"></script>
-  <script src="js/handlebars-v4.0.5.js"></script>
-  <script src="js/main.js"></script>
-  </body>
 </html>
