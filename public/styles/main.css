@@ -282,13 +282,12 @@ a {
 body {
   margin: 0 15%;
   position: relative;
-  background: whitesmoke; }
+  background: linear-gradient(to right, #dacba9, #2f2221, #0b0004, #2f2221, #dacba9); }
 
 button {
   border-radius: 5px;
   border: none;
-  color: #560001;
-  background: linear-gradient(to right, #dacba9, #2f2221, #0b0004, #2f2221, #dacba9); }
+  color: #560001; }
 
 .hidden {
   display: none; }

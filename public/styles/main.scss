@@ -36,14 +36,13 @@ a {
 body {
     margin: 0 15%;
     position: relative;
-    background: whitesmoke;
+    background: linear-gradient(to right, $beige-color, $dark-red-color, $dark-color, $dark-red-color, $beige-color);
 }
 
 button {
     border-radius: 5px;
     border: none;
     color: $red-color;
-    background: linear-gradient(to right, $beige-color, $dark-red-color, $dark-color, $dark-red-color, $beige-color);
 }
 
 .hidden {
