@@ -4,6 +4,7 @@ require_relative 'models/rating'
 require_relative 'schema'
 
 def main
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   csv = CSV.read('u.data', encoding: 'windows-1252', col_sep: "\t")
   csv.each do |line|
     user_id = line[0].to_i
@@ -12,6 +13,7 @@ def main
     timestamp = line[3]
 
     Rating.create!(user_id: user_id, movie_id: movie_id, rating: rating, timestamp: timestamp)
+    ActiveRecord::Base.connection.close
 
   end
 
