@@ -1,8 +1,13 @@
 $red-color: #560001;
+$bright-red-color: #ff2524;
 $beige-color: #dacba9;
 $dark-color: #0b0004;
 $light-beige-color: #ebe3c2;
-$red-dark-color: #2f2221;
+$dark-red-color: #2f2221;
+
+@import "partials/header";
+@import "partials/hero";
+@import "partials/movieViewer";
 @import "partials/header";
 @import "partials/hero";
 @import "partials/userViewer";
@@ -15,10 +20,24 @@ $red-dark-color: #2f2221;
     list-style: none;
 }
 
+a {
+    text-decoration: none;
+    color: $red-color;
+
+    &:hover {
+        color: $bright-red-color;
+    }
+
+    &:active {
+        color: whitesmoke;
+    }
+
+}
+
 body {
     margin: 0 15%;
     position: relative;
-    background: linear-gradient(to right, $beige-color, $red-dark-color, $dark-color, $red-dark-color, $beige-color);
+    background: linear-gradient(to right, $beige-color, $dark-red-color, $dark-color, $dark-red-color, $beige-color);
 }
 
 .hidden {
@@ -30,13 +49,17 @@ button {
     background: $beige-color;
     border: none;
     color: $red-color;
+
+    &:active {
+        color: $beige-color;
+        background: $red-color;
+    }
+
+    &:focus {
+        outline: none;
+    }
 }
 
 h1 {
     color: $beige-color;
-}
-
-.content-container {
-    // width: 100%;
-    // position: absolute;
 }

@@ -30,7 +30,7 @@
 
             <div id="search-section">
                 <form id="search-form" method="get">
-                    <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
+                    <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
                 </form>
             </div>
 
@@ -38,115 +38,55 @@
         <div class="content-container">
             <div class="content">
                 <!-- TEMPLATES USED HERE -->
-                <!-- <div id="user-info-container" class="hidden">
-                    <div id="user-info">
-                      <h2 id="user-id">User Id: sillyThing47</h2>
-                      <p class="user-details">Occupation: clown</p>
-                      <p class="user-details">Gender: F</p>
-                      <p class="user-details">Zip: 80315</p>
-                        <span id="my-top-rated">My Movie Ratings</span>
-                        <ul class="top-rated-list">
-
-                            <li>
-                                <div id="top-rated-container">
-                                    <span>Movie 1</span>
-                                    <span id="star-container">
-                                <i class="star fa-star fa"></i>
-                                <i class="star fa-star-o fa"></i>
-                                <i class="star fa-star-o fa"></i>
-                                <i class="star fa-star-o fa"></i>
-                                <i class="star fa-star-o fa"></i>
-                                </span>
-                                    <select id="rate-it">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="delete">Delete</option>
-                                </select>
-                                    <p id="year">1990</p>
-                                    <p id="rated-movie-info">Here is some random movie info.</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div id="top-rated-container">
-                                    <span>Movie 2</span>
-                                    <span id="star-container">
-                              <i class="star fa-star fa"></i>
-                              <i class="star fa-star-half-o fa"></i>
-                              <i class="star fa-star-o fa"></i>
-                              <i class="star fa-star-o fa"></i>
-                              <i class="star fa-star-o fa"></i>
-                              </span>
-                                    <select id="rate-it">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="delete">Delete</option>
-                              </select>
-                                    <p id="year">1992</p>
-                                    <p id="rated-movie-info">Here is some more random movie info.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div> -->
-
-                <div id="manage-users-container">
-                    <section id="manage-users-section">
-                        <h2>Add, Delete, or Edit a User.</h2>
-                        <button id="add-user">Add</button>
-                        <button id="delete-user">Delete</button>
-                        <button id="edit-user">Edit</button>
-                        <!-- Add User Form -->
-                        <div id="add-user-div" class="hidden">
-                            <form id="add-user-form">
-                                <h2>Add a New User</h2>
-                                <input id="new-user" type="text" name="new-user" placeholder="New User Name"></input>
-                                <input id="new-occupation" type="text" name="new-occupation" placeholder="New User Occupation"></input>
-                                <input id="new-zip" type="text" name="new-zip" placeholder="New User Zipcode"></input>
-                                <select id="new-gender" type="text" name="new-user" placeholder="New User Gender">
-                          <option>Gender</option>
-                          <option id="f" value="F">F</option>
-                          <option id="m" value="M">M</option>
-                          <option id="na" value="NA">No Answer</option>
-                        </select>
-                                <button type="button">Submit</button>
-                            </form>
-                        </div>
-                        <!-- end of Add User Form -->
-                        <!-- Delete User Form -->
-                        <div id="delete-user-div" class="">
-
-                            <div id="search-users">
-                                <form id="search-users-form" method="get">
-                                    <input id="input-user-search" class="" placeholder="Search Users."></input>
-                                </form>
-                            </div>
-                            <button type="button">Cancel</button>
-                            <button type="button">Delete this User</button>
 
 
-                            <!-- end of Delete Color Form -->
-                            <div id="delete-user-div" class="">
-                            </div>
-                            <div id="manage-user-div" class="">
-                            </div>
-                    </section>
-                    </div>
 
-                </div>
+
+
+
+
+
+
+
+
             </div>
+        </div>
 
     </main>
 
 
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
+
+    <script id="movie-result" type="text/x-handlebars-template">
+        <!-- APPEND <ul id="results"> TO .CONTENT ELEMENT AND APPEND THIS: -->
+        <li class="movie-viewer">
+            <div class="movie-header">
+                <h1 class="title">{{title}}</h1>
+                <p class="ratings-count">
+                    <a href="#">{{ratingCount}} Ratings</a>
+                </p>
+                <div class="ratings-bubble">
+                    <h2 class="avg-rating">Average:</h2>
+                    <h1 class="avg-rating">{{ratingAverage}}</h1>
+                </div>
+            </div>
+            <div class="movie-body">
+                <ul class="mv-user-list">
+                    <li class="mv-user list-head">
+                        <span>User Name:</span><span>Rating:</span>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </script>
+
+    <script id="user-table-item" type="text/x-handlebars-template">
+        <li class="mv-user">
+            <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
+            <span class="mv-user-score">{{userScore}}</span>
+        </li>
+    </script>
+
     <script id="user-info-container" type="text/x-handlebars-template">
         <div id="user-info-container" class="hidden">
             <div id="user-info">
