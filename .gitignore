@@ -2,6 +2,7 @@
 *.map
 *.gem
 *.rbc
+*.sass-cache
 /.config
 /coverage/
 /InstalledFiles
