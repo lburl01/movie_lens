@@ -1,36 +1,36 @@
 header {
-  position: relative;
-  background: black;
-  color: white;
-  text-align: center;
-  line-height: 0;
-  background: $dark-color;
-
-
-  .corner {
+    position: relative;
+    background: black;
+    color: white;
+    text-align: center;
+    line-height: 0;
     background: $dark-color;
-    width: 200px;
-    height: 100%;
-    position: absolute;
-    &.left {
-      left: 0;
-    }
 
-    &.right{
-      right: 0;
-    }
-  }
+    .corner {
+        background: $dark-color;
+        width: 200px;
+        height: 100%;
+        position: absolute;
 
+        &.left {
+            left: 0;
+        }
+
+        &.right {
+            right: 0;
+        }
+    }
 }
 
 #manage-users {
-margin: 3% 0% 0% 50%;
+    margin: 3% 0 0 50%;
 }
 
 header * {
-  display: inline-block;
-  button {
-    height: 50%;
-    margin: 5.5% 0;
-  }
+    display: inline-block;
+
+    button {
+        height: 50%;
+        margin: 5.5% 0;
+    }
 }

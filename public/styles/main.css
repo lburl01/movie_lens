@@ -16,7 +16,7 @@ header {
       right: 0; }
 
 #manage-users {
-  margin: 3% 0% 0% 50%; }
+  margin: 3% 0 0 50%; }
 
 header * {
   display: inline-block; }
@@ -55,7 +55,7 @@ header * {
   color: #560001; }
 
 #user-info-container {
-  margin: 3% 0%;
+  margin: 3% 0;
   position: relative;
   background: #dacba9;
   width: 70%;
@@ -140,7 +140,7 @@ select {
   text-align: center; }
 
 #input-user-search {
-  margin: 6% 0% 3% 0%; }
+  margin: 6% 0 3%; }
 
 * {
   font-family: sans-serif;

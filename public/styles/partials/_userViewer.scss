@@ -1,18 +1,16 @@
 //something in it.
 
-
 .content {
     color: $red-color;
 }
 
 #user-info-container {
-    margin: 3% 0%;
+    margin: 3% 0;
     position: relative;
     background: $beige-color;
     width: 70%;
     border: 1px solid $dark-color;
     transform: translateX(21%);
-
 }
 
 #user-info {
@@ -25,7 +23,7 @@
 }
 
 .user-details {
-  text-align: center;
+    text-align: center;
 }
 
 .rated-movies-list {
@@ -45,10 +43,10 @@
 }
 
 #my-top-rated {
-  margin-top: 4%;
-  display: inline-block;
-  transform: translate(148%);
-  font-size: 1.25em;
+    margin-top: 4%;
+    display: inline-block;
+    transform: translate(148%);
+    font-size: 1.25em;
 }
 
 #star-container {
