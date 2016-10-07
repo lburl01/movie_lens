@@ -1,6 +1,6 @@
 require 'csv'
 # require_relative 'environment'
-require_relative 'rating'
+require_relative 'models/rating'
 require_relative 'schema'
 
 def main
