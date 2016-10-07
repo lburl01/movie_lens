@@ -54,7 +54,3 @@ end
 get '/api/ratings/all_ratings/:movie_id' do
   appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
 end
-
-get '/api/ratings/all_ratings/:movie_id' do
-  appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
-end
