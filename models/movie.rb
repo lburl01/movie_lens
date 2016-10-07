@@ -1,6 +1,6 @@
 require 'active_record'
 require_relative '../schema'
-require_relative '../environment'
+# require_relative '../environment'
 
 class Movie < ActiveRecord::Base
   validates :title, presence: true

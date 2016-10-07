@@ -5,17 +5,17 @@ require_relative 'models/user'
 require_relative 'models/rating'
 require 'json'
 
-# database_config = YAML::load(File.open('config/database.yml'))
+database_config = YAML::load(File.open('config/database.yml'))
 
-#ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 
 before do
   content_type :json
 end
 
-# after do
-#   ActiveRecord::Base.connection.close
-# end
+after do
+  ActiveRecord::Base.connection.close
+end
 
 get '/api/movies/title' do
   if !params['search'].nil?
@@ -50,6 +50,10 @@ get '/api/ratings/average/:movie_id' do
   average = Rating.where(movie_id: params['movie_id']).average("rating")
   status 200
   average.to_json
+end
+
+get '/api/ratings/all_ratings/:movie_id' do
+  appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
 end
 
 get '/api/ratings/all_ratings/:movie_id' do

@@ -1,5 +1,5 @@
 require 'csv'
-require_relative 'environment'
+# require_relative 'environment'
 require_relative 'movie'
 require_relative 'schema'
 
