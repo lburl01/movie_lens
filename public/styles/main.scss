@@ -1,18 +1,23 @@
 $red-color: #560001;
+$bright-red-color: #ff2524;
 $beige-color: #dacba9;
 $dark-color: #0b0004;
 
 @import "partials/header";
 @import "partials/hero";
+@import "partials/movieViewer";
 
 * {
   font-family: sans-serif;
   font-weight: 100;
   box-sizing: border-box;
+  list-style: none;
 }
 
 body {
   margin: 0 15%;
+  position: relative;
+  background: whitesmoke;
 }
 
 button {
@@ -26,7 +31,8 @@ h1 {
   color: $beige-color;
 }
 
-.content-container {
-  width: 100%;
-  position: absolute;
+.content-container{
+  .content.active{
+  //background??
+  }
 }
