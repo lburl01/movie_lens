@@ -47,5 +47,11 @@ get '/api/movies/:id' do
 end
 
 get '/api/ratings/average/:movie_id' do
-  average = Rating.where(movie_id: params['movie_id']).average("rating").to_json
+  average = Rating.where(movie_id: params['movie_id']).average("rating")
+  status 200
+  average.to_json
+end
+
+get '/api/ratings/all_ratings/:movie_id' do
+  appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
 end
