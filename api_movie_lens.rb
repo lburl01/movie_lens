@@ -17,16 +17,31 @@ end
 #   ActiveRecord::Base.connection.close
 # end
 
-# get 'api/movie/1' do
-#   JSON.dumps '{"id": 1, "title": "Toy Story"}'
-# end
-
-get '/api/movies' do
+get '/api/movies/title' do
   if !params['search'].nil?
-    Movie.where("title like ?", "%#{params['search']}%").to_json
+    movie = Movie.where("title like (?)", "%#{params['search']}%")
+    if movie.empty?
+      halt(404)
+    end
+    status 200
+    movie.to_json
   end
 end
 
+get '/api/users/:id' do
+  user = User.find_by_id(params['id'])
+  if user.nil?
+    halt(404)
+  end
+  status 200
+  user.to_json
+end
+
 get '/api/movies/:id' do
-  task = Movie.find_by_id(params['id']).to_json
+  movie = Movie.find_by_id(params['id'])
+  if movie.nil?
+    halt(404)
+  end
+  status 200
+  movie.to_json
 end
