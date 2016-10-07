@@ -45,3 +45,7 @@ get '/api/movies/:id' do
   status 200
   movie.to_json
 end
+
+get '/api/ratings/average/:movie_id' do
+  average = Rating.where(movie_id: params['movie_id']).average("rating").to_json
+end
