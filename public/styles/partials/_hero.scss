@@ -1,33 +1,39 @@
 #hero {
-  background: url('../images/hero.jpg');
-  background-size: 110%;
-  background-repeat: no-repeat;
-  background-position: 73% 47%;
-  width: 100%;
-  text-align: center;
-
-  #input-field{
-    font-size: 2em;
-    background: transparent;
-    border: none;
-    color: black;
+    background: url('../images/hero.jpg');
+    background-size: 110%;
+    background-repeat: no-repeat;
+    background-position: 73% 47%;
+    width: 100%;
     text-align: center;
-    width: 50%;
-    &::-webkit-input-placeholder {
-      color: $red-color;
+    -webkit-box-shadow: 0 10px 25px -4px $dark-color;
+    border-radius: 1px;
+
+    #input-field {
+        font-size: 2em;
+        background: transparent;
+        border: none;
+        color: black;
+        text-align: center;
+        width: 50%;
+
+        &::-webkit-input-placeholder {
+            color: $red-color;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &.open {
+            margin: 190px 0;
+            transition: all ease 1s;
+            padding: 20px;
+        }
+
+        &.closed {
+            margin: 0;
+            transition: all ease 1s;
+            padding: 5px;
+        }
     }
-    &:focus{
-      outline: none;
-    }
-    &.open {
-      margin: 190px 0;
-      transition: all ease 1s;
-      padding: 20px;
-    }
-    &.closed {
-      margin: 0px 0;
-      transition: all ease 1s;
-      padding: 5px;
-    }
-  }
 }
