@@ -3,7 +3,21 @@ require 'csv'
 require_relative 'models/user'
 require_relative 'schema'
 
+# database_config = YAML::load(File.open('config/database.yml'))
+#
+# ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+
+# before do
+#   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+#   content_type :json
+# end
+#
+# after do
+#   ActiveRecord::Base.connection.close
+# end
+
 def main
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   csv = CSV.read('u.user', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|
     id = line[0].to_i

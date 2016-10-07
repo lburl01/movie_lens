@@ -6,10 +6,11 @@ require_relative 'models/rating'
 require 'json'
 
 database_config = YAML::load(File.open('config/database.yml'))
-
-ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+#
+# ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 
 before do
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   content_type :json
 end
 
