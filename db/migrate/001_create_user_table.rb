@@ -1,5 +1,5 @@
 
-class CreateUsers < ActiveRecord::Migration[5.0]
+class CreateUserTable < ActiveRecord::Migration[5.0]
   def up
     create_table :users do |t|
       t.integer :age
@@ -17,7 +17,7 @@ end
 def main
   action = (ARGV[0] || :up).to_sym
 
-  CreateUsers.migrate(action)
+  CreateUserTable.migrate(action)
 
 end
 
