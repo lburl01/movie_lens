@@ -28,7 +28,7 @@ header * {
   background-position: 73% 47%;
   width: 100%;
   text-align: center;
-  -webkit-box-shadow: 0px 10px 25px -4px #0b0004;
+  -webkit-box-shadow: 0 10px 25px -4px #0b0004;
   border-radius: 1px; }
   #hero #input-field {
     font-size: 2em;
@@ -46,7 +46,7 @@ header * {
       transition: all ease 1s;
       padding: 20px; }
     #hero #input-field.closed {
-      margin: 0px 0;
+      margin: 0;
       transition: all ease 1s;
       padding: 5px; }
 
@@ -59,10 +59,10 @@ header * {
 
 .movie-viewer {
   background: #dacba9;
-  margin: 10px 25px 0px 25px;
+  margin: 10px 25px 0;
   position: relative;
   padding: 10px;
-  -webkit-box-shadow: 0px 5px 19px -4px #560001;
+  -webkit-box-shadow: 0 5px 19px -4px #560001;
   border-radius: 1px; }
 
 .movie-header .title {
@@ -70,7 +70,7 @@ header * {
 .movie-header .ratings-count {
   font-size: 15px;
   font-style: italic;
-  opacity: .5; }
+  opacity: 0.5; }
 .movie-header .ratings-box * {
   display: block; }
 .movie-header .ratings-bubble {
@@ -91,7 +91,7 @@ header * {
   .movie-header .ratings-bubble h1.avg-rating {
     font-size: 40px;
     color: #ff2524;
-    text-shadow: 0px 0px 9px #dacba9; }
+    text-shadow: 0 0 9px #dacba9; }
 
 .movie-body {
   padding-top: 10px;
@@ -109,7 +109,7 @@ header * {
     .movie-body .mv-user > span.mv-user-score {
       color: #ff2524;
       color: #ff2524;
-      text-shadow: 0px 0px 9px #0b0004; }
+      text-shadow: 0 0 9px #0b0004; }
   .movie-body .mv-user.list-head > span {
     font-weight: bold;
     font-size: 13px;

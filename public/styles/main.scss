@@ -2,49 +2,52 @@ $red-color: #560001;
 $bright-red-color: #ff2524;
 $beige-color: #dacba9;
 $dark-color: #0b0004;
-
 @import "partials/header";
 @import "partials/hero";
 @import "partials/movieViewer";
 
 * {
-  font-family: sans-serif;
-  font-weight: 100;
-  box-sizing: border-box;
-  list-style: none;
+    font-family: sans-serif;
+    font-weight: 100;
+    box-sizing: border-box;
+    list-style: none;
 }
 
 a {
-  text-decoration: none;
-  color: $red-color;
-  &:hover{
-    color: $bright-red-color;
-  }
-  &:active {
-    color: whitesmoke;
-  }
+    text-decoration: none;
+    color: $red-color;
+
+    &:hover {
+        color: $bright-red-color;
+    }
+
+    &:active {
+        color: whitesmoke;
+    }
 }
 
 body {
-  margin: 0 15%;
-  position: relative;
-  background: whitesmoke;
+    margin: 0 15%;
+    position: relative;
+    background: whitesmoke;
 }
 
 button {
-  border-radius: 5px;
-  background: $beige-color;
-  border: none;
-  color: $red-color;
-  &:active{
-    color: $beige-color;
-    background: $red-color;
-  }
-  &:focus{
-    outline: none;
-  }
+    border-radius: 5px;
+    background: $beige-color;
+    border: none;
+    color: $red-color;
+
+    &:active {
+        color: $beige-color;
+        background: $red-color;
+    }
+
+    &:focus {
+        outline: none;
+    }
 }
 
 h1 {
-  color: $beige-color;
+    color: $beige-color;
 }

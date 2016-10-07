@@ -22,95 +22,20 @@
             <button id="login-button" type="buton">LOGIN</button>
         </div>
 
-      </header>
-      <main>
+    </header>
+    <main>
         <div id="hero">
 
-          <div id="search-section">
-            <form id="search-form" method="get">
-              <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
-            </form>
-          </div>
+            <div id="search-section">
+                <form id="search-form" method="get">
+                    <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
+                </form>
+            </div>
 
         </div>
         <div class="content-container">
-          <div class="content active"> <!-- vs "inactive" -->
-            <!-- TEMPLATES USED HERE -->
-            <ul id="results">
-              <li class="movie-viewer">
-                <div class="movie-header">
-                  <h1 class="title">Movie Title 3: Return of the Movie</h1>
-                  <p class="ratings-count">
-                    <a href="#">127 Ratings</a>
-                  </p>
-                  <div class="ratings-bubble">
-                    <h2 class="avg-rating">Average:</h2>
-                    <h1 class="avg-rating">5.3</h1>
-                  </div>
-                </div>
-                <div class="movie-body">
-                  <ul class="mv-user-list">
-                    <li class="mv-user list-head">
-                      <span>User Name:</span><span>Rating:</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">some dude</a></span>
-                      <span class="mv-user-score">6.3</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">another jerk</a></span>
-                      <span class="mv-user-score">3</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">todd</a></span>
-                      <span class="mv-user-score">8</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">tad</a></span>
-                      <span class="mv-user-score">4</span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <li class="movie-viewer">
-                <div class="movie-header">
-                  <h1 class="title">Shrek Buckley: Def Buckley</h1>
-                  <p class="ratings-count">
-                    <a href="#">15 Ratings</a>
-                  </p>
-                  <div class="ratings-bubble">
-                    <h2 class="avg-rating">Average:</h2>
-                    <h1 class="avg-rating">10</h1>
-                  </div>
-                </div>
-                <div class="movie-body">
-                  <ul class="mv-user-list">
-                    <li class="mv-user list-head">
-                      <span>User Name:</span><span>Rating:</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">goofus</a></span>
-                      <span class="mv-user-score">3</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">gallant</a></span>
-                      <span class="mv-user-score">5</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">jimmy</a></span>
-                      <span class="mv-user-score">8</span>
-                    </li>
-                    <li class="mv-user">
-                      <span class="mv-user-name"><a href="#">jummy</a></span>
-                      <span class="mv-user-score">10</span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-
-            </ul>
+            <div class="content">
+                <!-- TEMPLATES USED HERE -->
 
 
 
@@ -121,19 +46,48 @@
 
 
 
-
-          </div>
+            </div>
         </div>
 
-      </main>
+    </main>
 
 
-<!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
+    <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
 
 
-        <script src="js/jquery-3.1.1.js"></script>
-        <script src="js/handlebars-v4.0.5.js"></script>
-        <script src="js/main.js"></script>
+    <script id="movie-result" type="text/x-handlebars-template">
+        <!-- APPEND <ul id="results"> TO .CONTENT ELEMENT AND APPEND THIS: -->
+        <li class="movie-viewer">
+            <div class="movie-header">
+                <h1 class="title">{{title}}</h1>
+                <p class="ratings-count">
+                    <a href="#">{{ratingCount}} Ratings</a>
+                </p>
+                <div class="ratings-bubble">
+                    <h2 class="avg-rating">Average:</h2>
+                    <h1 class="avg-rating">{{ratingAverage}}</h1>
+                </div>
+            </div>
+            <div class="movie-body">
+                <ul class="mv-user-list">
+                    <li class="mv-user list-head">
+                        <span>User Name:</span><span>Rating:</span>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </script>
+
+    <script id="user-table-item" type="text/x-handlebars-template">
+        <li class="mv-user">
+            <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
+            <span class="mv-user-score">{{userScore}}</span>
+        </li>
+    </script>
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
