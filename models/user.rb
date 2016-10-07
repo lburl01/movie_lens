@@ -1,6 +1,6 @@
 require 'active_record'
-require_relative 'schema'
-require_relative 'environment'
+require_relative '../schema'
+require_relative '../environment'
 
 class User < ActiveRecord::Base
   validates :age, :gender, :occupation, :zip_code, presence: true
