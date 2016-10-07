@@ -37,23 +37,26 @@
         <div class="content-container">
             <div class="content">
                 <!-- TEMPLATES USED HERE -->
-                <div id="user-info-container" class="hidden">
+                <div id="user-info-container" class="">
                     <div id="user-info">
-                        <h2>My User Name</h2>
+                      <h2 id="user-id">User Id: sillyThing47</h2>
+                      <p class="user-details">Occupation: clown</p>
+                      <p class="user-details">Gender: F</p>
+                      <p class="user-details">Zip: 80315</p>
                         <span id="my-top-rated">My Movie Ratings</span>
                         <ul class="top-rated-list">
 
-                        <li>
-                            <div id="top-rated-container">
-                                <span>Movie 1</span>
-                                <span id="star-container">
+                            <li>
+                                <div id="top-rated-container">
+                                    <span>Movie 1</span>
+                                    <span id="star-container">
                                 <i class="star fa-star fa"></i>
                                 <i class="star fa-star-o fa"></i>
                                 <i class="star fa-star-o fa"></i>
                                 <i class="star fa-star-o fa"></i>
                                 <i class="star fa-star-o fa"></i>
                                 </span>
-                                <select id="rate-it">
+                                    <select id="rate-it">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -61,22 +64,22 @@
                                     <option value="5">5</option>
                                     <option value="delete">Delete</option>
                                 </select>
-                                <p id="year">1990</p>
-                                <p id="rated-movie-info">Here is some random movie info.</p>
-                            </div>
-                        </li>
+                                    <p id="year">1990</p>
+                                    <p id="rated-movie-info">Here is some random movie info.</p>
+                                </div>
+                            </li>
 
-                      <li>
-                          <div id="top-rated-container">
-                              <span>Movie 2</span>
-                              <span id="star-container">
+                            <li>
+                                <div id="top-rated-container">
+                                    <span>Movie 2</span>
+                                    <span id="star-container">
                               <i class="star fa-star fa"></i>
-                              <i class="star fa-star-o fa"></i>
+                              <i class="star fa-star-half-o fa"></i>
                               <i class="star fa-star-o fa"></i>
                               <i class="star fa-star-o fa"></i>
                               <i class="star fa-star-o fa"></i>
                               </span>
-                              <select id="rate-it">
+                                    <select id="rate-it">
                                   <option value="1">1</option>
                                   <option value="2">2</option>
                                   <option value="3">3</option>
@@ -84,11 +87,11 @@
                                   <option value="5">5</option>
                                   <option value="delete">Delete</option>
                               </select>
-                              <p id="year">1992</p>
-                              <p id="rated-movie-info">Here is some more random movie info.</p>
-                          </div>
-                      </li>
-                    </ul>
+                                    <p id="year">1992</p>
+                                    <p id="rated-movie-info">Here is some more random movie info.</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
                 </div>
@@ -101,18 +104,31 @@
 
 
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
-<script id="user-info" type="text/x-handlebars-template">
-      <li>
-          <div id="top-rated-container">
-              <span>{{movie-title}}</span>
-              <span id="star-container">
+    <script id="user-info-container" type="text/x-handlebars-template">
+      <div id="user-info-container" class="hidden">
+        <div id="user-info">
+          <h2 id="user-id">User ID: {{user-id}}</h2>
+          <p class="user-details">Occupation: {{user-occupation}}</p>
+          <p class="user-details">Gender: {{user-gender}}</p>
+          <p class="user-details">Zip Code: {{user-zip}}</p>
+          <span id="my-top-rated">My Movie Ratings</span>
+          <ul class="top-rated-list">
+          </ul>
+        </script>
+        <!--end of user-info template -->
+
+    <script id="user-info-list-item" type="text/x-handlebars-template">
+        <li>
+            <div id="top-rated-container">
+                <span>{{movie-title}}</span>
+                <span id="star-container">
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               </span>
-              <select id="rate-it">
+                <select id="rate-it">
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -120,12 +136,12 @@
                   <option value="5">5</option>
                   <option value="delete">Delete</option>
               </select>
-              <p id="year">{{movie-year}}/p>
-              <p id="rated-movie-info">{{movie-info}}</p>
-          </div>
-      </li>
-</script>
-<!--end of user-info template -->
+                <p id="year">{{movie-year}}/p>
+                    <p id="rated-movie-info">{{movie-info}}</p>
+            </div>
+        </li>
+    </script>
+    <!-- end of list item in user-info -->
 
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>
