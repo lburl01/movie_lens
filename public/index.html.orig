@@ -30,7 +30,11 @@
 
             <div id="search-section">
                 <form id="search-form" method="get">
+<<<<<<< HEAD
+                    <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
+=======
                     <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
+>>>>>>> userviewertemplate
                 </form>
             </div>
 
@@ -40,6 +44,18 @@
                 <!-- TEMPLATES USED HERE -->
 
 
+
+
+
+
+
+
+
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> userviewertemplate
             </div>
         </div>
 
@@ -48,6 +64,10 @@
 
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> userviewertemplate
     <script id="movie-result" type="text/x-handlebars-template">
         <!-- APPEND <ul id="results"> TO .CONTENT ELEMENT AND APPEND THIS: -->
         <li class="movie-viewer">
@@ -78,7 +98,8 @@
         </li>
     </script>
 
-
+<<<<<<< HEAD
+=======
     <script id="user-info-container" type="text/x-handlebars-template">
         <div id="user-info-container" class="hidden">
             <div id="user-info">
@@ -118,6 +139,7 @@
     </script>
     <!-- end of list item in user-info -->
 
+>>>>>>> userviewertemplate
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>
     <script src="js/main.js"></script>

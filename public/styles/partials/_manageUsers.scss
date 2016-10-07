@@ -1,0 +1,47 @@
+input,
+select {
+    background: $light-beige-color;
+    color: $dark-red-color;
+}
+
+#add-user-form {
+    input {
+        display: block;
+        margin: 2% 34%;
+    }
+}
+
+#add-user-form {
+    h2 {
+        margin-top: 8%;
+    }
+}
+
+#manage-users-container {
+    margin: 3% 0;
+    position: relative;
+    background: $beige-color;
+    width: 70%;
+    border: 1px solid $dark-color;
+    transform: translateX(21%);
+
+    &.hidden {
+        display: none;
+    }
+}
+
+#manage-users-section {
+    width: 70%;
+    background: red;
+    transform: translateX(17%);
+    position: relative;
+    padding: 1%;
+    margin: 2% 0;
+    border: 0.75px solid $dark-color;
+    background: $light-beige-color;
+    text-align: center;
+}
+
+#input-user-search {
+    margin: 6% 0 3%;
+}

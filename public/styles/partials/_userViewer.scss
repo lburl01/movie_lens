@@ -1,0 +1,67 @@
+//something in it.
+
+.content {
+    color: $red-color;
+}
+
+#user-info-container {
+    margin: 3% 0;
+    position: relative;
+    background: $beige-color;
+    width: 70%;
+    border: 1px solid $dark-color;
+    transform: translateX(21%);
+}
+
+#user-info {
+    padding-bottom: 2%;
+}
+
+#user-id {
+    line-height: 1.5em;
+    text-align: center;
+}
+
+.user-details {
+    text-align: center;
+}
+
+.rated-movies-list {
+    padding: 0;
+    text-align: center;
+}
+
+#top-rated-container {
+    width: 70%;
+    background: red;
+    transform: translateX(17%);
+    position: relative;
+    padding: 1%;
+    margin: 2% 0;
+    border: 0.75px solid $dark-color;
+    background: $light-beige-color;
+}
+
+#my-top-rated {
+    margin-top: 4%;
+    display: inline-block;
+    transform: translate(148%);
+    font-size: 1.25em;
+}
+
+#star-container {
+    float: right;
+}
+
+.star {
+    height: 14px;
+    color: $red-color;
+}
+
+#rate-it {
+    right: 1%;
+    top: 21%;
+    position: absolute;
+    color: $dark-color;
+    background: $beige-color;
+}

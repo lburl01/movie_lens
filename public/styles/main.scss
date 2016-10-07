@@ -2,9 +2,15 @@ $red-color: #560001;
 $bright-red-color: #ff2524;
 $beige-color: #dacba9;
 $dark-color: #0b0004;
+$light-beige-color: #ebe3c2;
+$dark-red-color: #2f2221;
 @import "partials/header";
 @import "partials/hero";
 @import "partials/movieViewer";
+@import "partials/header";
+@import "partials/hero";
+@import "partials/userViewer";
+@import "partials/manageUsers";
 
 * {
     font-family: sans-serif;
@@ -24,12 +30,24 @@ a {
     &:active {
         color: whitesmoke;
     }
+
 }
 
 body {
     margin: 0 15%;
     position: relative;
     background: whitesmoke;
+}
+
+button {
+    border-radius: 5px;
+    border: none;
+    color: $red-color;
+    background: linear-gradient(to right, $beige-color, $dark-red-color, $dark-color, $dark-red-color, $beige-color);
+}
+
+.hidden {
+    display: none;
 }
 
 button {
