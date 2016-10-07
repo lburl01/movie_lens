@@ -14,6 +14,17 @@ $dark-color: #0b0004;
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: $red-color;
+  &:hover{
+    color: $bright-red-color;
+  }
+  &:active {
+    color: whitesmoke;
+  }
+}
+
 body {
   margin: 0 15%;
   position: relative;
@@ -25,14 +36,15 @@ button {
   background: $beige-color;
   border: none;
   color: $red-color;
+  &:active{
+    color: $beige-color;
+    background: $red-color;
+  }
+  &:focus{
+    outline: none;
+  }
 }
 
 h1 {
   color: $beige-color;
-}
-
-.content-container{
-  .content.active{
-  //background??
-  }
 }
