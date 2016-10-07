@@ -1,33 +1,35 @@
 $red-color: #560001;
 $beige-color: #dacba9;
 $dark-color: #0b0004;
-
+$light-beige-color: #ebe3c2;
+$red-dark-color: #2f2221;
 @import "partials/header";
 @import "partials/hero";
 @import "partials/userViewer";
 
 * {
-  font-family: sans-serif;
-  font-weight: 100;
-  box-sizing: border-box;
+    font-family: sans-serif;
+    font-weight: 100;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0 15%;
+    margin: 0 15%;
+    position: relative;
 }
 
 button {
-  border-radius: 5px;
-  background: $beige-color;
-  border: none;
-  color: $red-color;
+    border-radius: 5px;
+    background: $beige-color;
+    border: none;
+    color: $red-color;
 }
 
 h1 {
-  color: $beige-color;
+    color: $beige-color;
 }
 
 .content-container {
-  width: 100%;
-  position: absolute;
+    // width: 100%;
+    // position: absolute;
 }

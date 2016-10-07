@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>The Movie Lens Viewer</title>
     <link href="styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./styles/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -36,24 +37,58 @@
         <div class="content-container">
             <div class="content">
                 <!-- TEMPLATES USED HERE -->
-                <div id="user-info-container">
+                <div id="user-info-container" class="hidden">
                     <div id="user-info">
-                        <h2>User Name</h2>
-                        <ul class="rated-movies-list">Movies Rated</ul>
+                        <h2>My User Name</h2>
+                        <span id="my-top-rated">My Movie Ratings</span>
+                        <ul class="top-rated-list">
+
                         <li>
-                            <div id="rated-movie-container">
+                            <div id="top-rated-container">
                                 <span>Movie 1</span>
                                 <span id="star-container">
-                                <img class="star" src="images/star.png">
-                                <img class="star" src="images/outline_star.png">
-                                <img class="star" src="images/outline_star.png">
-                                <img class="star" src="images/outline_star.png">
-                                <img class="star" src="images/outline_star.png">
-                              </span>
+                                <i class="star fa-star fa"></i>
+                                <i class="star fa-star-o fa"></i>
+                                <i class="star fa-star-o fa"></i>
+                                <i class="star fa-star-o fa"></i>
+                                <i class="star fa-star-o fa"></i>
+                                </span>
+                                <select id="rate-it">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="delete">Delete</option>
+                                </select>
+                                <p id="year">1990</p>
                                 <p id="rated-movie-info">Here is some random movie info.</p>
                             </div>
                         </li>
-                        </ul>
+
+                      <li>
+                          <div id="top-rated-container">
+                              <span>Movie 2</span>
+                              <span id="star-container">
+                              <i class="star fa-star fa"></i>
+                              <i class="star fa-star-o fa"></i>
+                              <i class="star fa-star-o fa"></i>
+                              <i class="star fa-star-o fa"></i>
+                              <i class="star fa-star-o fa"></i>
+                              </span>
+                              <select id="rate-it">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="delete">Delete</option>
+                              </select>
+                              <p id="year">1992</p>
+                              <p id="rated-movie-info">Here is some more random movie info.</p>
+                          </div>
+                      </li>
+                    </ul>
                     </div>
 
                 </div>
@@ -66,7 +101,31 @@
 
 
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
-
+<script id="user-info" type="text/x-handlebars-template">
+      <li>
+          <div id="top-rated-container">
+              <span>{{movie-title}}</span>
+              <span id="star-container">
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              </span>
+              <select id="rate-it">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="delete">Delete</option>
+              </select>
+              <p id="year">{{movie-year}}/p>
+              <p id="rated-movie-info">{{movie-info}}</p>
+          </div>
+      </li>
+</script>
+<!--end of user-info template -->
 
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>

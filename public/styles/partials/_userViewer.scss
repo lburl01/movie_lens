@@ -4,30 +4,69 @@
     list-style: none;
 }
 
+body {
+    background: linear-gradient(to right, $beige-color, $red-dark-color, $dark-color, $red-dark-color, $beige-color);
+}
+
+.content {
+    color: $red-color;
+}
+
 #user-info-container {
-    position: absolute;
-    background: pink;
+    margin: 3% 0%;
+    position: relative;
+    background: $beige-color;
     width: 70%;
+    border: 1px solid $dark-color;
+    transform: translateX(21%);
+    &.hidden {
+      display: none;
+    }
+}
+
+#user-info {
+    padding-bottom: 2%;
 }
 
 h2 {
+    line-height: 1.5em;
     text-align: center;
 }
 
 .rated-movies-list {
     padding: 0;
     text-align: center;
-
 }
 
-#rated-movie-container {
-  width: 70%;
-  background: red;
-  transform: translateX(23%);
+#top-rated-container {
+    width: 70%;
+    background: red;
+    transform: translateX(17%);
+    position: relative;
+    padding: 1%;
+    margin: 2% 0;
+    border: 0.75px solid $dark-color;
+    background: $light-beige-color;
 }
 
-#star-container {}
+#my-top-rated {
+    display: inline-block;
+    transform: translate(200%);
+}
+
+#star-container {
+    float: right;
+}
 
 .star {
     height: 14px;
+    color: $red-color;
+}
+
+#rate-it {
+    right: 1%;
+    top: 21%;
+    position: absolute;
+    color: $dark-color;
+    background: $beige-color;
 }
