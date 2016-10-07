@@ -1,6 +1,6 @@
 require 'csv'
 require_relative 'environment'
-require_relative 'model'
+require_relative 'movie'
 require_relative 'schema'
 
 def main
