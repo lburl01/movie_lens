@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>The Movie Lens Viewer</title>
     <link href="styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./styles/fonts/font-awesome-4.6.3/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -20,6 +21,7 @@
         <div class="corner right">
             <input id="login-field" type="text" placeholder="username"></input>
             <button id="login-button" type="buton">LOGIN</button>
+            <button id="manage-users">Manage Users</button>
         </div>
 
     </header>
@@ -28,7 +30,7 @@
 
             <div id="search-section">
                 <form id="search-form" method="get">
-                    <input id="input-field" class="closed" placeholder="Enter your movie search here."></input>
+                    <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
                 </form>
             </div>
 
@@ -38,14 +40,6 @@
                 <!-- TEMPLATES USED HERE -->
 
 
-
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -53,7 +47,6 @@
 
 
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
-
 
     <script id="movie-result" type="text/x-handlebars-template">
         <!-- APPEND <ul id="results"> TO .CONTENT ELEMENT AND APPEND THIS: -->
@@ -84,6 +77,46 @@
             <span class="mv-user-score">{{userScore}}</span>
         </li>
     </script>
+
+
+    <script id="user-info-container" type="text/x-handlebars-template">
+        <div id="user-info-container" class="hidden">
+            <div id="user-info">
+                <h2 id="user-id">User ID: {{user-id}}</h2>
+                <p class="user-details">Occupation: {{user-occupation}}</p>
+                <p class="user-details">Gender: {{user-gender}}</p>
+                <p class="user-details">Zip Code: {{user-zip}}</p>
+                <span id="my-top-rated">My Movie Ratings</span>
+                <ul class="top-rated-list">
+                </ul>
+    </script>
+    <!--end of user-info template -->
+
+    <script id="user-info-list-item" type="text/x-handlebars-template">
+        <li>
+            <div id="top-rated-container">
+                <span id="{{movie-id}}">{{movie-title}}</span>
+                <span id="star-container">
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              <i class="star fa fa-{{star}}"></i>
+              </span>
+                <select id="rate-it">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="delete">Delete</option>
+              </select>
+                <p id="year">{{movie-year}}/p>
+                    <p id="rated-movie-info">{{movie-info}}</p>
+            </div>
+        </li>
+    </script>
+    <!-- end of list item in user-info -->
 
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/handlebars-v4.0.5.js"></script>
