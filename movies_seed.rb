@@ -4,6 +4,8 @@ require_relative 'models/movie'
 require_relative 'schema'
 
 def main
+    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+
   csv = CSV.read('u.item', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|
     id = line[0].to_i
@@ -34,6 +36,8 @@ def main
     Movie.create!(id: id, title: title, release_date: release_date, video_release: video_release, imdb_url: imdb_url, unknown_genre: unknown_genre, action: action, adventure: adventure, animation: animation, children: children, comedy: comedy, crime: crime, documentary: documentary, drama: drama, fantasy: fantasy, film_noir: film_noir, horror: horror, musical: musical, mystery: mystery, romance: romance, sci_fi: sci_fi, thriller: thriller, war: war, western: western)
 
   end
+
+  ActiveRecord::Base.connection.close
 
 end
 main if __FILE__ == $PROGRAM_NAME
