@@ -1,12 +1,5 @@
 //something in it.
 
-* {
-    list-style: none;
-}
-
-body {
-    background: linear-gradient(to right, $beige-color, $red-dark-color, $dark-color, $red-dark-color, $beige-color);
-}
 
 .content {
     color: $red-color;
@@ -19,9 +12,7 @@ body {
     width: 70%;
     border: 1px solid $dark-color;
     transform: translateX(21%);
-    &.hidden {
-      display: none;
-    }
+
 }
 
 #user-info {

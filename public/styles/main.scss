@@ -3,19 +3,28 @@ $beige-color: #dacba9;
 $dark-color: #0b0004;
 $light-beige-color: #ebe3c2;
 $red-dark-color: #2f2221;
+
 @import "partials/header";
 @import "partials/hero";
 @import "partials/userViewer";
+@import "partials/manageUsers";
 
 * {
     font-family: sans-serif;
     font-weight: 100;
     box-sizing: border-box;
+    list-style: none;
 }
 
 body {
     margin: 0 15%;
     position: relative;
+    background: linear-gradient(to right, $beige-color, $red-dark-color, $dark-color, $red-dark-color, $beige-color);
+
+}
+
+.hidden {
+  display: none;
 }
 
 button {
