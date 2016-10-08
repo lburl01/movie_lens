@@ -16,6 +16,11 @@ after do
   ActiveRecord::Base.connection.close
 end
 
+get '/foo' do
+  headers 'Access-Control-Allow-Origin' => 'https://arcane-woodland-29724.herokuapp.com'
+  'hello world'
+end
+
 get '/api/movies/title' do
   if !params['search'].nil?
     movie = Movie.where("title like (?)", "%#{params['search']}%")
