@@ -71,3 +71,17 @@ post '/api/new_user' do
   User.create(id: User.maximum(:id).next, age: params['age'], gender: params['gender'], occupation: params['occupation'], zip_code: params['zip_code']).to_json
   status 201
 end
+
+put '/api/update_user/:id' do
+  u = User.find_by(id: params[:id])
+  if u.nil?
+    halt(404)
+  end
+  status 200
+  u.update(
+    age: params['age'],
+    gender: params['gender'],
+    occupation: params['occupation'],
+    zip_code: params['zip_code']
+  ).to_json
+end
