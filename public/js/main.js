@@ -1,31 +1,76 @@
-//code??
+// GLOBAL VARIABLES
+
+var movieSearchField = $('#input-field');
+var userSearchField = $('#user-field');
+var findUserButton = $('#user-button');
+var manageUserButton = $('#manage-users');
+var topRatedButton = $('top-rated');
+
+// GLOBAL FUNCTIONS
+
+function apiQuery(query, queryType){
+  var url = "https://arcane-woodland-29724.herokuapp.com";
+  var endPoint;
+
+  switch (queryType) { // query dictionary
+    case 'movieTitle': //
+      endPoint = '/api/movies/title/?search=' + query;
+      break;
+    case 'userId':
+      endPoint = '/api/users/' + query;
+      break;
+    case 'movieId':
+      endPoint = '/api/movies/' + query;
+      break;
+    case 'ratingAverage':
+      endPoint = '/api/ratings/average/' + query;
+      break;
+    case 'ratings':
+      endPoint = '/api/ratings/all_ratings/' + query;
+      break;
+    default:
+      endPoint = null;
+      break;
+  }
 
 
-// when this is called, be sure to create this:
-// var list = $('<li>').attr('id', 'results');
-// $(list).appendTo('.content');
-
-function displayMovieResult(movieTitle, ratingCount, average, listElem){
-  var source = $("#movie-result").html();
-  var template = Handlebars.compile(source);
-  var context = {
-    title: movieTitle,
-    ratingCount: ratingCount,
-    ratingAverage: average
-  };
-  var html = template(context);
-  $(html).appendTo(listElem);
 }
 
-function displayMovieInfo(){
-  $('.content').empty(); // clear content area
-  console.log(source);
+function movieSearch(string){
+  collapseSearch();
+  console.log("did a movie search for: " + string);
+
 }
 
-displayMovieInfo();
+function userSearch(string){
+  collapseSearch();
+  console.log("did a user search for " + string);
+}
 
-// $('.content').empty();
-// var list = $('<li>').attr('id', 'results');
-// $(list).appendTo('.content');
-//
-// displayMovieResult("Bad Boys II", 457, 3.2, list);
+function collapseSearch(){
+  movieSearchField.removeClass('open').addClass('closed');
+}
+
+function expandSearch(){
+  movieSearchField.removeClass('closed').addClass('open');
+}
+
+
+
+
+
+// LAUNCH CODE:
+
+$('#search-form').submit(function(event){
+  event.preventDefault();
+  var searchString = movieSearchField.val();
+  movieSearchField.val('');
+  movieSearch(searchString);
+});
+
+$('#user-search-form').submit(function(event){
+  event.preventDefault();
+  var searchString = userSearchField.val();
+  userSearchField.val('');
+  userSearch(searchString);
+});
