@@ -36,6 +36,18 @@ get '/api/users/:id' do
   user.to_json
 end
 
+get '/api/movies_count' do
+  Movie.count.to_json
+end
+
+get '/api/ratings_count' do
+  Rating.count.to_json
+end
+
+get '/api/users_count' do
+  User.count.to_json
+end
+
 get '/api/movies/:id' do
   movie = Movie.find_by_id(params['id'])
   if movie.nil?
