@@ -50,10 +50,7 @@ function apiGet(queryType, query){
     dataType: 'json'
   };
 
-  $.ajax(settings).done(function(response){
-    console.log(response);
-  });
-
+  return settings;
 }
 
 function handleError(){
@@ -63,11 +60,20 @@ function handleError(){
 function movieSearch(string){
   collapseSearch();
   console.log("did a movie search for: " + string);
-  apiGet('movieTitle', string);
+  $.ajax(apiGet('movieTitle', string)).done(function(response){
+    for (var index = 0; index < response.length; index++){
+      //var thisMovie = new Movie(response[index])
+      //thisMovie.displaySearchResult();
+      console.log(response[index]);
+    }
+  });
 }
 
 function userSearch(string){
   collapseSearch();
+  $.ajax(apiGet('userId', string)).done(function(response){
+    console.log(response);
+  });
   console.log("did a user search for " + string);
 }
 
@@ -79,7 +85,20 @@ function expandSearch(){
   movieSearchField.removeClass('closed').addClass('open');
 }
 
+// CONSTRUCTORS:
 
+function Movie(dataObject) {
+  this.id = dataObject.id;
+  this.title = dataObject.title;
+  this.average = this.getAverage();
+}
+
+Movie.prototype = {
+  getAverage: function(){
+    var result = $.ajax(apiGet('ratingAverage', this.id));
+    console.log(result);
+  }
+};
 
 
 
