@@ -66,3 +66,8 @@ end
 get '/api/ratings/all_ratings/:movie_id' do
   appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
 end
+
+post '/api/new_user' do
+  User.create(id: User.maximum(:id).next, age: params['age'], gender: params['gender'], occupation: params['occupation'], zip_code: params['zip_code']).to_json
+  status 201
+end
