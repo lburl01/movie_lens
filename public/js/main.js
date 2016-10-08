@@ -62,9 +62,11 @@ function movieSearch(string){
   console.log("did a movie search for: " + string);
   $.ajax(apiGet('movieTitle', string)).done(function(response){
     for (var index = 0; index < response.length; index++){
-      //var thisMovie = new Movie(response[index])
+      var thisMovie = new Movie(response[index]);
       //thisMovie.displaySearchResult();
-      console.log(response[index]);
+      console.log(thisMovie);
+      // console.log(thisMovie.getAverage());
+      // console.log(thisMovie.average);
     }
   });
 }
@@ -85,18 +87,30 @@ function expandSearch(){
   movieSearchField.removeClass('closed').addClass('open');
 }
 
+function round(value, precision) {
+   var multiplier = Math.pow(10, precision || 0);
+   return Math.round(value * multiplier) / multiplier;
+}
+
 // CONSTRUCTORS:
 
 function Movie(dataObject) {
   this.id = dataObject.id;
   this.title = dataObject.title;
-  this.average = this.getAverage();
+  this.getAverage();
+  console.log(this);
 }
 
 Movie.prototype = {
   getAverage: function(){
-    var result = $.ajax(apiGet('ratingAverage', this.id));
-    console.log(result);
+    var average;
+    $.ajax(apiGet('ratingAverage', this.id)).done((function(response, average){
+      average = round(response, 1);
+      console.log("Inside callback:");
+      console.log(average);
+      this.average = average;
+      console.log(this);
+    }).bind(this));
   }
 };
 
