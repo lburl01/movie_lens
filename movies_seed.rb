@@ -6,9 +6,8 @@ require_relative 'db/migrate/002_create_movies'
 
 def main
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-  conn.exec(select setval(pg_get_serial_sequence('users', 'id'),
-            (select max(id) from users)
-     );)
+  conn.exec(select setval(pg_get_serial_sequence('users', 'id'), (select max(id) from users)
+     ))
 
   csv = CSV.read('u.item', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|
