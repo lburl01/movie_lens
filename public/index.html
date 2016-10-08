@@ -19,7 +19,7 @@
         <h1>THE MOVIE LENS</h1>
 
         <div class="corner right">
-          
+
           <form id="user-search-form" autocomplete="off">
             <input id="user-field" type="text" placeholder="username"></input>
           </form>
@@ -53,8 +53,8 @@
 
     <script id="movie-result" type="text/x-handlebars-template">
 
-        <!-- listElem.appendTo('.content') -->
-        <!-- .appendTo(listElem) -->
+<!-- listElem.appendTo('.content') -->
+<!-- .appendTo(listElem) -->
         <li class="movie-viewer" movie-Id="{{movie-Id}}">
             <div class="movie-header">
                 <h1 class="title">{{title}}</h1>
@@ -69,18 +69,18 @@
         </li>
     </script>
 
-    <!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
+<!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
     <script id="movie-result-body" type="text/x-handlebars-template">
-        <div class="movie-body">
-            <ul class="mv-user-list">
-                <li class="mv-user list-head">
-                    <span>User Name:</span><span>Rating:</span>
-                </li>
-            </ul>
-        </div>
+      <div class="movie-body">
+        <ul class="mv-user-list">
+          <li class="mv-user list-head">
+            <span>User Name:</span><span>Rating:</span>
+          </li>
+        </ul>
+      </div>
     </script>
 
-    <!-- .appendTo('.mv-user-list') -->
+<!-- .appendTo('.mv-user-list') -->
     <script id="user-table-item" type="text/x-handlebars-template">
         <li class="mv-user">
             <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
@@ -107,6 +107,27 @@
                 <div id="top-rated-container">
                     <span id="{{movie-id}}">{{movie-title}}</span>
                     <span id="star-container">
+
+<!-- .appendTo('.content') -->
+    <script id="user-info-container" type="text/x-handlebars-template">
+        <div id="user-info-container" class="hidden">
+            <div id="user-info">
+                <h2 id="user-id">User ID: {{user-id}}</h2>
+                <p class="user-details">Occupation: {{user-occupation}}</p>
+                <p class="user-details">Gender: {{user-gender}}</p>
+                <p class="user-details">Zip Code: {{user-zip}}</p>
+                <span id="my-top-rated">My Movie Ratings</span>
+                <ul class="top-rated-list">
+                </ul>
+    </script>
+    <!--end of user-info template -->
+
+<!-- .appendTo('.top-rated-list') -->
+    <script id="user-info-list-item" type="text/x-handlebars-template">
+        <li>
+            <div id="top-rated-container">
+                <span id="{{movie-id}}">{{movie-title}}</span>
+                <span id="star-container">
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
