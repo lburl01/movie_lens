@@ -4,17 +4,46 @@ select {
     color: $dark-red-color;
 }
 
-#add-user-form {
-    input {
-        display: block;
-        margin: 2% 34%;
-    }
+#add-user-btn,
+#delete-user-btn,
+#edit-user-btn {
+    margin: 3% 0 5%;
 }
 
 #add-user-form {
+    input {
+        display: block;
+        margin: 2% 30%;
+    }
+
     h2 {
         margin-top: 8%;
     }
+}
+
+#edit-user-form {
+    input {
+        display: block;
+        margin: 2% 30%;
+    }
+
+    h2 {
+        margin-top: 8%;
+    }
+}
+
+.gender {
+    transform: translateX(150%);
+    display: block;
+}
+
+.submit {
+    margin: 3% 40%;
+}
+
+#input-search-delete,
+#input-search-edit {
+    text-align: center;
 }
 
 #manage-users-container {
@@ -44,4 +73,13 @@ select {
 
 #input-user-search {
     margin: 6% 0 3%;
+}
+
+#user-to-edit,
+#user-to-delete {
+    margin: 3% 5%;
+}
+
+#new-id {
+    margin: 5%;
 }
