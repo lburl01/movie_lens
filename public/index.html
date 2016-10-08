@@ -53,8 +53,8 @@
 
     <script id="movie-result" type="text/x-handlebars-template">
 
-<!-- listElem.appendTo('.content') -->
-<!-- .appendTo(listElem) -->
+        <!-- listElem.appendTo('.content') -->
+        <!-- .appendTo(listElem) -->
         <li class="movie-viewer" movie-Id="{{movie-Id}}">
             <div class="movie-header">
                 <h1 class="title">{{title}}</h1>
@@ -69,18 +69,18 @@
         </li>
     </script>
 
-<!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
+    <!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
     <script id="movie-result-body" type="text/x-handlebars-template">
-      <div class="movie-body">
-        <ul class="mv-user-list">
-          <li class="mv-user list-head">
-            <span>User Name:</span><span>Rating:</span>
-          </li>
-        </ul>
-      </div>
+        <div class="movie-body">
+            <ul class="mv-user-list">
+                <li class="mv-user list-head">
+                    <span>User Name:</span><span>Rating:</span>
+                </li>
+            </ul>
+        </div>
     </script>
 
-<!-- .appendTo('.mv-user-list') -->
+    <!-- .appendTo('.mv-user-list') -->
     <script id="user-table-item" type="text/x-handlebars-template">
         <li class="mv-user">
             <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
