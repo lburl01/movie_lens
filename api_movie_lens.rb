@@ -22,6 +22,10 @@ get '/foo' do
   'hello world'
 end
 
+options '/*' do
+  response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
+end
+
 register Sinatra::CrossOrigin
 
 configure do
