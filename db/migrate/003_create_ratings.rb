@@ -1,3 +1,4 @@
+require 'active_record'
 
 class CreateRatings < ActiveRecord::Migration[5.0]
   def up

@@ -21,7 +21,7 @@ def main
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   conn.exec(select setval(pg_get_serial_sequence('users', 'id'),
             (select max(id) from users)
-     );)
+     ))
   csv = CSV.read('u.user', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|
     id = line[0].to_i
