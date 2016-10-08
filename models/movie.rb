@@ -1,5 +1,6 @@
 require 'active_record'
-require_relative '../schema'
+require_relative '../db/migrate/002_create_movies'
+# require_relative '../schema'
 # require_relative '../environment'
 
 class Movie < ActiveRecord::Base

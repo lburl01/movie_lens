@@ -1,5 +1,6 @@
 require 'active_record'
-require_relative '../schema'
+require_relative '../db/migrate/001_create_users'
+# require_relative '../schema'
 # require_relative '../environment'
 
 class User < ActiveRecord::Base
