@@ -41,7 +41,12 @@ function apiGet(queryType, query){
     method: "GET",
     processData: false,
     error: handleError,
-    data: {},
+    headers: {
+
+    },
+    data: {
+      "some": "json"
+    },
     dataType: 'json'
   };
 
