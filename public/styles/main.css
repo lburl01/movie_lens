@@ -18,6 +18,9 @@ header {
 #manage-users {
   margin: 3% 0 0 50%; }
 
+#user-search-form {
+  padding: 5px; }
+
 header * {
   display: inline-block; }
   header * button {
@@ -138,6 +141,9 @@ header {
 
 #manage-users {
   margin: 3% 0 0 50%; }
+
+#user-search-form {
+  padding: 5px; }
 
 header * {
   display: inline-block; }
