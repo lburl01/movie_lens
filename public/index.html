@@ -19,9 +19,12 @@
         <h1>THE MOVIE LENS</h1>
 
         <div class="corner right">
-            <input id="login-field" type="text" placeholder="username"></input>
-            <button id="login-button" type="buton">LOGIN</button>
-            <button id="manage-users">Manage Users</button>
+
+          <form id="user-search-form" autocomplete="off">
+            <input id="user-field" type="text" placeholder="username"></input>
+          </form>
+
+          <button id="manage-users">Manage Users</button>
         </div>
 
     </header>
@@ -29,7 +32,7 @@
         <div id="hero">
 
             <div id="search-section">
-                <form id="search-form" method="get">
+                <form id="search-form" autocomplete="off">
                     <input id="input-field" class="open" placeholder="Enter your movie search here."></input>
                 </form>
             </div>
@@ -49,8 +52,10 @@
     <!-- DEFINE HANDLEBAR TEMPLATES: APPEND TO CONTENT CLASS -->
 
     <script id="movie-result" type="text/x-handlebars-template">
-        <!-- APPEND <ul id="results"> TO .CONTENT ELEMENT AND APPEND THIS: -->
-        <li class="movie-viewer">
+
+<!-- listElem.appendTo('.content') -->
+<!-- .appendTo(listElem) -->
+        <li class="movie-viewer" movie-Id="{{movie-Id}}">
             <div class="movie-header">
                 <h1 class="title">{{title}}</h1>
                 <p class="ratings-count">
@@ -61,24 +66,60 @@
                     <h1 class="avg-rating">{{ratingAverage}}</h1>
                 </div>
             </div>
-            <div class="movie-body">
-                <ul class="mv-user-list">
-                    <li class="mv-user list-head">
-                        <span>User Name:</span><span>Rating:</span>
-                    </li>
-                </ul>
-            </div>
         </li>
     </script>
 
+    <!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
+    <script id="movie-result-body" type="text/x-handlebars-template">
+        <div class="movie-body">
+            <ul class="mv-user-list">
+                <li class="mv-user list-head">
+                    <span>User Name:</span><span>Rating:</span>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+<!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
+    <script id="movie-result-body" type="text/x-handlebars-template">
+      <div class="movie-body">
+        <ul class="mv-user-list">
+          <li class="mv-user list-head">
+            <span>User Name:</span><span>Rating:</span>
+          </li>
+        </ul>
+      </div>
+    </script>
+
+<!-- .appendTo('.mv-user-list') -->
     <script id="user-table-item" type="text/x-handlebars-template">
         <li class="mv-user">
             <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
             <span class="mv-user-score">{{userScore}}</span>
         </li>
-    </script>
 
+        <!-- .appendTo('.content') -->
+        <script id="user-info-container" type="text/x-handlebars-template">
+            <div id="user-info-container" class="hidden">
+                <div id="user-info">
+                    <h2 id="user-id">User ID: {{user-id}}</h2>
+                    <p class="user-details">Occupation: {{user-occupation}}</p>
+                    <p class="user-details">Gender: {{user-gender}}</p>
+                    <p class="user-details">Zip Code: {{user-zip}}</p>
+                    <span id="my-top-rated">My Movie Ratings</span>
+                    <ul class="top-rated-list">
+                    </ul>
+        </script>
+        <!--end of user-info template -->
 
+        <!-- .appendTo('.top-rated-list') -->
+        <script id="user-info-list-item" type="text/x-handlebars-template">
+            <li>
+                <div id="top-rated-container">
+                    <span id="{{movie-id}}">{{movie-title}}</span>
+                    <span id="star-container">
+
+<!-- .appendTo('.content') -->
     <script id="user-info-container" type="text/x-handlebars-template">
         <div id="user-info-container" class="hidden">
             <div id="user-info">
@@ -92,6 +133,7 @@
     </script>
     <!--end of user-info template -->
 
+<!-- .appendTo('.top-rated-list') -->
     <script id="user-info-list-item" type="text/x-handlebars-template">
         <li>
             <div id="top-rated-container">
@@ -103,7 +145,7 @@
               <i class="star fa fa-{{star}}"></i>
               <i class="star fa fa-{{star}}"></i>
               </span>
-                <select id="rate-it">
+                    <select id="rate-it">
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -111,16 +153,100 @@
                   <option value="5">5</option>
                   <option value="delete">Delete</option>
               </select>
-                <p id="year">{{movie-year}}/p>
-                    <p id="rated-movie-info">{{movie-info}}</p>
-            </div>
-        </li>
-    </script>
-    <!-- end of list item in user-info -->
+                    <p id="year">{{movie-year}}/p>
+                        <p id="rated-movie-info">{{movie-info}}</p>
+                </div>
+            </li>
+        </script>
+        <!-- end of list item in user-info -->
 
-    <script src="js/jquery-3.1.1.js"></script>
-    <script src="js/handlebars-v4.0.5.js"></script>
-    <script src="js/main.js"></script>
+        <!-- Manage Users Section, appendTo(.content) -->
+        <script id="manage-users" type="text/x-handlebars-template">
+            <div id="manage-users-container">
+                <section id="manage-users-section">
+                    <h2>Add, Delete, or Edit a User.</h2>
+                    <button id="add-user-btn">Add</button>
+                    <button id="delete-user-btn">Delete</button>
+                    <button id="edit-user-btn">Edit</button>
+                </section>
+            </div>
+        </script>
+        <!-- end of Manage Users Section-->
+
+        <!-- Add User Form, appendTo(#manage-users-section), remove class="hidden"-->
+        <script id="add-user" type="text/x-handlebars-template">
+            <div id="add-user-div" class="show">
+                <form id="add-user-form">
+                    <h2>Add a New User</h2>
+                    <input id="new-occupation" type="text" name="new-occupation" placeholder="New User Occupation"></input>
+                    <input id="new-zip" type="text" name="new-zip" placeholder="New User Zipcode"></input>
+                    <select id="new-gender" class="gender" type="text" name="new-user">
+              <option>Gender</option>
+              <option id="f" value="F">F</option>
+              <option id="m" value="M">M</option>
+              <option id="na" value="NA">No Answer</option>
+            </select>
+                    <button class="submit" type="button">Submit</button>
+                </form>
+                <div class="show" id="new-id">Your new User Id is: {{userId}}</div>
+            </div>
+        </script>
+        <!-- end of Add User Form -->
+
+        <!-- Delete User Form, appendTo(#manage-users-section) -->
+        <script id="delete-user" type="text/x-handlebars-template">
+            <div id="delete-user-div" class="">
+                <div id="search-users">
+                    <form id="search-users-form" method="get">
+                        <input id="input-search-delete" class="show" placeholder="Search Users."></input>
+                    </form>
+                    <div id="user-to-delete">User Id: {{userId}}</div>
+                </div>
+                <button class="cancel-btn" type="button">Cancel</button>
+                <button id="delete-btn" type="button">Delete this User</button>
+            </div>
+        </script>
+        <!-- end of Delete User Form -->
+
+
+            <!--  Edit User Header, appendTo(#manage-users-section)-->
+            <script id="edit-user-header" type="text/x-handlebars-template">
+                <div id="edit-user-div" class="">
+                    <div id="search-users">
+                        <form id="search-users-form" method="get">
+                            <input id="input-search-edit" class="" placeholder="Search Users."></input>
+                        </form>
+                        <div id="user-to-edit">User Id: {{userId}}</div>
+                    </div>
+                    <button class="cancel-btn" type="button">Cancel</button>
+                    <button class="edit-this-user-btn" type="button">Edit this User</button>
+                </div>
+            </script>
+            <!-- end of Edit User Header -->
+
+            <!-- Edit User Form appendTo(#edit-user-div) when edit-this-user-btn clicked-->
+            <script id="edit-user-body" type="text/x-handlebars-template">
+                <div id="edit-user-div" class="">
+                    <form id="edit-user-form">
+                        <h2>Edit User: {{userId}}</h2>
+                        <input id="edit-user" type="text" name="edit-user" placeholder="UserId"></input>
+                        <input id="edit-occupation" type="text" name="edit-occupation" placeholder="User Occupation"></input>
+                        <input id="edit-zip" type="text" name="edit-zip" placeholder="User Zipcode"></input>
+                        <select id="new-gender" class="gender" type="text" name="new-user">
+                        <option>Gender</option>
+                        <option id="f" value="F">F</option>
+                        <option id="m" value="M">M</option>
+                        <option id="na" value="NA">No Answer</option>
+                      </select>
+                        <button class="submit" type="button">Submit Changes</button>
+                    </form>
+                </div>
+            </script>
+        <!-- end of Edit User Form -->
+
+        <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/handlebars-v4.0.5.js"></script>
+        <script src="js/main.js"></script>
 </body>
 
 </html>
