@@ -85,11 +85,3 @@ put '/api/update_user/:id' do
     zip_code: params['zip_code']
   ).to_json
 end
-
-delete '/api/delete_user/:id' do
-  u = User.find_by(id: params[:id])
-  if u.nil?
-    halt(404)
-  end
-  u.destroy
-end
