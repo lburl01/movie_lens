@@ -4,6 +4,7 @@ require_relative 'models/movie'
 require_relative 'models/user'
 require_relative 'models/rating'
 require 'json'
+require "sinatra/cross_origin"
 
 database_config = YAML::load(File.open('config/database.yml'))
 
@@ -19,6 +20,12 @@ end
 get '/foo' do
   headers 'Access-Control-Allow-Origin' => 'https://arcane-woodland-29724.herokuapp.com'
   'hello world'
+end
+
+register Sinatra::CrossOrigin
+
+configure do
+  enable :cross_origin
 end
 
 get '/api/movies/title' do
