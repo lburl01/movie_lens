@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :occupation
       t.integer :zip_code
     end
+
   end
 
   def down

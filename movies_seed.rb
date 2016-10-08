@@ -1,10 +1,14 @@
 require 'csv'
 # require_relative 'environment'
 require_relative 'models/movie'
-require_relative 'schema'
+require_relative 'db/migrate/002_create_movies'
+# require_relative 'schema'
 
 def main
-    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+  conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+  conn.exec(select setval(pg_get_serial_sequence('users', 'id'),
+            (select max(id) from users)
+     );)
 
   csv = CSV.read('u.item', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|

@@ -1,7 +1,8 @@
 require 'csv'
 # require_relative 'environment'
 require_relative 'models/user'
-require_relative 'schema'
+require_relative 'db/migrate/001_create_users'
+# require_relative 'schema'
 
 # database_config = YAML::load(File.open('config/database.yml'))
 #
@@ -17,7 +18,10 @@ require_relative 'schema'
 # end
 
 def main
-  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+  conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+  conn.exec(select setval(pg_get_serial_sequence('users', 'id'),
+            (select max(id) from users)
+     );)
   csv = CSV.read('u.user', encoding: 'windows-1252', col_sep: "|")
   csv.each do |line|
     id = line[0].to_i
