@@ -48,13 +48,17 @@ get '/api/movies/title_avg_rating' do
 end
 
 get '/api/users/:id' do
-  user = User.find_by_id(params['id'])
+  user = User.find_by(id: params['id'])
+  ratings = Rating.select(:movie_id, :rating).joins("INNER JOIN users ON ratings.user_id = users.id").where(user_id: params[:id]).joins("INNER JOIN movies ON ratings.movie_id = movies.id").all
+  payload = {'user' => user, 'ratings' => ratings}
   if user.nil?
     halt(404)
   end
   status 200
-  user.to_json
+  payload.to_json
 end
+
+# For Users, everything is pretty good with the userID query, except we also need a RATINGS object that for the user will consist of key:value pairs where the key corresponds to the MOVIE_ID and the value corresponds to the USER_RATING for that movie.
 
 get '/api/movies_count' do
   Movie.count.to_json
