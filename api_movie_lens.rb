@@ -84,7 +84,7 @@ get '/api/ratings/average/:movie_id' do
 end
 
 get '/api/ratings/all_ratings/:movie_id' do
-  ratings = Rating.select(:movie_id, :user_id, :title, :rating).joins("INNER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("INNER JOIN users ON ratings.user_id = users.id").all.to_json
+  ratings = Rating.select(:movie_id, :user_id, :title, :rating, :imdb_url, :release_date).joins("INNER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("INNER JOIN users ON ratings.user_id = users.id").all.to_json
 end
 
 post '/api/new_user' do
@@ -92,7 +92,7 @@ post '/api/new_user' do
   status 201
 end
 
-put '/api/update_user/:id' do
+put '/api/update_user' do #need to validate by user id and movie id/title
   u = User.find_by(id: params[:id])
   if u.nil?
     halt(404)
@@ -107,20 +107,21 @@ put '/api/update_user/:id' do
 end
 
 post '/api/new_rating' do
-  Rating.create(user_id: params['user_id'], movie_id: params['movie_id'], rating: params['rating']).to_json
-  status 201
+    r = Rating.create(user_id: params['user_id'], movie_id: params['movie_id'], rating: params['rating'])
+    r.to_json
+    status 201
 end
 
-put '/api/update_rating' do #need to validate by user id and movie id/title
-  u = User.find_by(id: params[:id])
-  if u.nil?
-    halt(404)
-  end
-  status 200
-  u.update(
-    age: params['age'],
-    gender: params['gender'],
-    occupation: params['occupation'],
-    zip_code: params['zip_code']
-  ).to_json
-end
+# put '/api/update_rating' do
+#   r = Rating.find_by(user_id: params['user_id'], movie_id: params['movie_id'])
+#   if r.nil?
+#     halt(404)
+#   end
+#   status 200
+#   r.update(
+#     params['user_id'],
+#     params['movie_id'],
+#     :rating => params['rating'],
+#     :timestamp => params['timestamp']
+#   ).to_json
+# end
