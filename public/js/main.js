@@ -24,7 +24,7 @@ function apiGet(queryType, query){
       endPoint = '/api/users/' + query;
       break;
     case 'movieId': // get Movie by movieID
-      endPoint = '/api/movies/' + query;
+      endPoint = '/api/movies/all/' + query;
       break;
     case 'ratingAverage': // get average rating by movieID
       endPoint = '/api/ratings/average/' + query;
@@ -196,16 +196,15 @@ Movie.prototype = {
     $(listElem).prepend(html);
     var id = this.id;
     $('.ratings-count').attr("movie-Id", this.id).click((function(event){
-      this.displayFull(id);
+      this.displayFull();
     }).bind(this));
 
   },
 
-  displayFull: function(id){
+  displayFull: function(){
     $('.content').empty();
     var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
-    console.log(id);
-    $.ajax(apiGet('movieId', id)).done(function(response){
+    $.ajax(apiGet('movieId', this.id)).done(function(response){
       console.log(response);
       var thisMovie = new Movie(response);
       thisMovie.displayResult(listElem);
@@ -216,7 +215,7 @@ Movie.prototype = {
       };
       console.log(context);
       var html = template(context);
-      $('.movie-viewer').attr('movie-Id', id).append(html);
+      $('.movie-viewer').attr('movie-Id', this.id).append(html);
     });
 
 
@@ -257,13 +256,20 @@ User.prototype = {
         var context = {
           "user-id": this.id,
           "movie-id": ratingObj.movie_id,
-          "movie-title": "Title of a Movie",
-          "movie-year": 2016,
-          "movie-info": "dummy info blah blah blah",
-          "movie-rating": 3
+          "movie-title": ratingObj.title,
+          "movie-rating": ratingObj.rating
         };
         var html = template(context);
         $('.top-rated-list').prepend(html);
+        var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
+        $(linkName).click(function(event){
+          var specId = $('.movie-title').attr('movieId');
+          console.log(specId);
+          $.ajax(apiGet('movieId', specId)).done(function(response){
+            var movie = new Movie(response);
+            movie.displayFull();
+          });
+        });
         this.starRating($('#star-container'), context['movie-rating']);
       }
       //end loop here
