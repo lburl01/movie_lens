@@ -49,7 +49,7 @@ end
 
 get '/api/users/:id' do
   user = User.find_by(id: params['id'])
-  ratings = Rating.select(:movie_id, :rating).joins("INNER JOIN users ON ratings.user_id = users.id").where(user_id: params[:id]).joins("INNER JOIN movies ON ratings.movie_id = movies.id").all
+  ratings = Rating.select(:movie_id, :rating, :title).joins("INNER JOIN users ON ratings.user_id = users.id").where(user_id: params[:id]).joins("INNER JOIN movies ON ratings.movie_id = movies.id").all
   payload = {'user' => user, 'ratings' => ratings}
   if user.nil?
     halt(404)
