@@ -63,10 +63,9 @@ function movieSearch(string){
   $.ajax(apiGet('movieTitle', string)).done(function(response){
     for (var index = 0; index < response.length; index++){
       var thisMovie = new Movie(response[index]);
-      //thisMovie.displaySearchResult();
+      var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
+      thisMovie.displayResult(listElem);
       console.log(thisMovie);
-      // console.log(thisMovie.getAverage());
-      // console.log(thisMovie.average);
     }
   });
 }
@@ -161,6 +160,26 @@ Movie.prototype = {
       }
     }).bind(this));
 
+  },
+
+  displayResult: function(listElem) {
+    if(!listElem) {
+      console.log("listElem is not defined.");
+      return;
+    }
+    console.log(this);
+    console.log(this.average);
+    var source = $("#movie-result").html();
+    var template = Handlebars.compile(source);
+    var context = {
+      movieId: this.id,
+      title: this.title,
+      ratingCount: Object.keys(this.ratings).length,
+      ratingAverage: this.average
+    };
+    console.log(context);
+    var html = template(context);
+    $(listElem).prepend(html);
   },
 
 };
