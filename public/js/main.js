@@ -102,6 +102,8 @@ function Movie(dataObject) {
   this.imbd = dataObject.imdb_url;
   this.genre = this.getGenre(dataObject);
   this.getAverage();
+  this.ratings = {};
+  this.getRatings();
 }
 
 Movie.prototype = {
@@ -143,7 +145,24 @@ Movie.prototype = {
       }
     }
     return genres;
-  }
+  },
+
+  getRatings: function(){
+    $.ajax(apiGet('ratings',this.id)).done((function(response){
+      for(var index = 0; index < response.length; index++){
+        for (var key in response[index]){
+          var currentObject = response[index];
+          if(key === "user_id"){
+            var name = currentObject[key];
+            this.ratings[name] = currentObject.rating;
+          }
+
+        }
+      }
+    }).bind(this));
+
+  },
+
 };
 
 
