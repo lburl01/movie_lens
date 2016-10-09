@@ -252,11 +252,14 @@ select {
 #edit-user-btn {
   margin: 3% 0 5%; }
 
-#add-user-form input {
-  display: block;
-  margin: 2% 30%; }
-#add-user-form h2 {
-  margin-top: 8%; }
+#manage-users-menu {
+  text-align: center; }
+
+#manage-users-menu * {
+  display: inline-block;
+  margin: 5px 0;
+  width: 100%;
+  padding: 3px 45px; }
 
 #edit-user-form input {
   display: block;
@@ -265,11 +268,7 @@ select {
   margin-top: 8%; }
 
 .gender {
-  transform: translateX(150%);
   display: block; }
-
-.submit {
-  margin: 3% 40%; }
 
 #input-search-delete,
 #input-search-edit {
@@ -282,8 +281,6 @@ select {
   width: 70%;
   border: 1px solid #0b0004;
   transform: translateX(21%); }
-  #manage-users-container.hidden {
-    display: none; }
 
 #manage-users-section {
   width: 70%;

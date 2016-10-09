@@ -24,7 +24,7 @@
             <input id="user-field" type="text" placeholder="username"></input>
           </form>
 
-          <button id="manage-users">Manage Users</button>
+          <button id="manage-users-btn">Manage Users</button>
         </div>
 
     </header>
@@ -110,7 +110,7 @@
     <script id="user-info-list-item" type="text/x-handlebars-template">
         <li class="list-item">
             <div id="top-rated-container">
-                <button class="delete" movieId="{{movie-id}}" userId="{{user-id}}">DELETE</button>
+                <button class="delete" movieId="{{movie-id}}" userId="{{user-id}}">X</button>
                 <a class="movie-title" movieId="{{movie-id}}" href="#">{{movie-title}}</a>
                 <span id="star-container" movieId="{{movie-id}}" userId="{{user-id}}">
                   <!-- <i class="star fa fa-{{star}}"></i>
@@ -132,12 +132,14 @@
                     <button id="add-user-btn">Add</button>
                     <button id="delete-user-btn">Delete</button>
                     <button id="edit-user-btn">Edit</button>
+                    <section id="manage-users-menu">
+                    </section>
                 </section>
             </div>
         </script>
 <!-- end of Manage Users Section-->
 
-<!-- Add User Form, appendTo(#manage-users-section), remove class="hidden"-->
+<!-- Add User Form, appendTo(#manage-users-menu), remove class="hidden"-->
         <script id="add-user" type="text/x-handlebars-template">
             <div id="add-user-div" class="">
                 <form id="add-user-form">
@@ -152,7 +154,7 @@
             </select>
                     <button class="submit" type="button">Submit</button>
                 </form>
-                <div class="show" id="new-id">Your new User Id is: {{userId}}</div>
+                <!-- <div class="show" id="new-id">Your new User Id is: {{userId}}</div> -->
             </div>
         </script>
 <!-- end of Add User Form -->
@@ -180,10 +182,8 @@
                     <form id="search-users-form" method="get">
                         <input id="input-search-edit" class="" placeholder="Search Users."></input>
                     </form>
-                    <div id="user-to-edit">User Id: {{userId}}</div>
+                    <!-- <div id="user-to-edit">User Id: </div> -->
                 </div>
-                <button class="cancel-btn" type="button">Cancel</button>
-                <button class="edit-this-user-btn" type="button">Edit this User</button>
             </div>
         </script>
 <!-- end of Edit User Header -->

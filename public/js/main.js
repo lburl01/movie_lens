@@ -12,6 +12,7 @@ function apiGet(queryType, query){
 
   var baseUrl = "https://arcane-woodland-29724.herokuapp.com";
   var endPoint;
+  var method = "GET";
 
   switch (queryType) { // query dictionary
     case 'movieTitle': // Search Method
@@ -26,6 +27,18 @@ function apiGet(queryType, query){
     case 'movieId': // get Movie by movieID
       endPoint = '/api/movies/all/' + query;
       break;
+    case 'updateUser':
+      method = "PUT";
+      endPoint = '/api/update_user/' + query;
+    break;
+    case 'newRating':
+      method = "POST";
+      endPoint = '/api/new_rating/' + query;
+    break;
+    case 'newUser':
+      method = "POST";
+      endPoint = '/api/new_user/' + query;
+    break;
     case 'ratingAverage': // get average rating by movieID
       endPoint = '/api/ratings/average/' + query;
       break;
@@ -283,6 +296,53 @@ User.prototype = {
 };
 
 // LAUNCH CODE:
+
+$('#manage-users-btn').click(function(event){
+  collapseSearch();
+  $('.content').empty();
+  var source = $('#manage-users').html();
+  var template = Handlebars.compile(source);
+  var context = {
+  };
+  var html = template(context);
+  $('.content').append(html);
+// Add button Behavior
+  $('#add-user-btn').click(function(event){
+    $('#manage-users-menu').empty();
+    var source = $('#add-user').html();
+    var template = Handlebars.compile(source);
+    var context = {
+    };
+    var html = template(context);
+    $('#manage-users-menu').append(html);
+  });
+  //Edit Button Behavior
+  $('#edit-user-btn').click(function(event){
+    $('#manage-users-menu').empty();
+    var source = $('#edit-user-header').html();
+    var template = Handlebars.compile(source);
+    var context = {
+    };
+    var html = template(context);
+    $('#manage-users-menu').append(html);
+    //click event for edit user button
+    $('#edit-this-user-btn').click(function(event){
+      //make user object here
+
+      $('#edit-user-div').empty();
+      var source = $('#edit-user-body').html();
+      var template = Handlebars.compile(source);
+      var context = {
+        userId : this.id
+      };
+      var html = template(context);
+      $('#edit-user-div').append(html);
+    });
+  });
+
+
+});
+
 
 $('#search-form').submit(function(event){
   event.preventDefault();
