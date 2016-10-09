@@ -72,7 +72,7 @@
 <!-- .appendTo('.movie-viewer'.attr(movie-Id)) -->
     <script id="movie-result-body" type="text/x-handlebars-template">
         <div class="movie-body">
-            <ul class="mv-user-list">
+            <ul id="mv-user-list">
                 <li class="mv-user list-head">
                     <span>User Name:</span><span>Rating:</span>
                 </li>
@@ -84,23 +84,10 @@
 <!-- .appendTo('.mv-user-list') -->
     <script id="user-table-item" type="text/x-handlebars-template">
         <li class="mv-user">
-            <span class="mv-user-name"><a href="#" user-Id="{{userId}}">{{userName}}</a></span>
+            <span class="mv-user-name" user-Id="{{userId}}"><a href="#">{{userId}}</a></span>
             <span class="mv-user-score">{{userScore}}</span>
         </li>
-
-<!-- .appendTo('.content') -->
-    <script id="user-info-container" type="text/x-handlebars-template">
-        <div id="user-info-container" class="hidden">
-            <div id="user-info">
-                <h2 id="user-id">User ID: {{user-id}}</h2>
-                <p class="user-details">Occupation: {{user-occupation}}</p>
-                <p class="user-details">Gender: {{user-gender}}</p>
-                <p class="user-details">Zip Code: {{user-zip}}</p>
-                <span id="my-top-rated">My Movie Ratings</span>
-                <ul class="top-rated-list">
-                </ul>
-    </script>
-<!--end of user-info template -->
+      </script>
 
 <!-- .appendTo('.content') -->
     <script id="user-info-container" type="text/x-handlebars-template">
@@ -114,6 +101,8 @@
                 <span id="my-top-rated"><a id="my-ratings" href="#">My Movie Ratings</a></span>
                 <ul class="top-rated-list">
                 </ul>
+            </div>
+        </div>
     </script>
 <!--end of user-info template -->
 

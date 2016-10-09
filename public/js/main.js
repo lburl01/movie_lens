@@ -105,30 +105,15 @@ function Movie(dataObject) {
   this.title = dataObject.title;
   this.date = dataObject.release_date;
   this.imbd = dataObject.imdb_url;
-  // this.genre = this.getGenre(dataObject);
-  this.genre = "mumblecore mumblecore mumblecore"; // dummy data
-  // this.average = round(dataObject.avg, 1);
-  this.average = 3.4; // dummy data
-  // this.ratingsCount = dataObject.count;
-  this.ratingsCount = 14; // dummy data
-  // this.getRatings();
-  this.ratings = { // dummy data
-    34: 4,
-    54: 2,
-    12: 2,
-    543: 3,
-    2: 1
-  };
+  this.genre = this.getGenre(dataObject);
+  this.average = round(dataObject.avg, 1);
+  this.ratingsCount = dataObject.count;
+  this.ratings = dataObject.ratings;
+  console.log(this);
 }
 
 Movie.prototype = {
-  // getAverage: function(){
-  //   var average;
-  //   $.ajax(apiGet('ratingAverage', this.id)).done((function(response, average){
-  //     average = round(response, 1);
-  //     this.average = average;
-  //   }).bind(this));
-  // },
+
   getGenre: function(dataObject){
     var genreDictionary = {
       "unknown_genre":0,
@@ -162,23 +147,6 @@ Movie.prototype = {
     return genres;
   },
 
-  getRatings: function(){
-    $.ajax(apiGet('ratings',this.id)).done((function(response){
-      console.log(response);
-      for(var index = 0; index < response.length; index++){
-        for (var key in response[index]){
-          var currentObject = response[index];
-          if(key === "user_id"){
-            var name = currentObject[key];
-            this.ratings[name] = currentObject.rating;
-          }
-
-        }
-      }
-    }).bind(this));
-
-  },
-
   displayResult: function(listElem) {
     if(!listElem) {
       console.log("listElem is not defined.");
@@ -188,7 +156,7 @@ Movie.prototype = {
     var template = Handlebars.compile(source);
     var context = {
       "movie-Id": this.id,
-      title: this.title+ " " +this.id,
+      title: this.title,
       ratingCount: this.ratingsCount,
       ratingAverage: this.average
     };
@@ -204,7 +172,7 @@ Movie.prototype = {
   displayFull: function(){
     $('.content').empty();
     var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
-    $.ajax(apiGet('movieId', this.id)).done(function(response){
+    $.ajax(apiGet('movieId', this.id)).done((function(response){
       console.log(response);
       var thisMovie = new Movie(response);
       thisMovie.displayResult(listElem);
@@ -213,10 +181,33 @@ Movie.prototype = {
       var template = Handlebars.compile(source);
       var context = {
       };
-      console.log(context);
       var html = template(context);
-      $('.movie-viewer').attr('movie-Id', this.id).append(html);
-    });
+      $('.movie-viewer').attr('movie-Id', thisMovie.id).append(html);
+      console.log(this);
+      for (var index = 0; index < thisMovie.ratings.length; index++){
+        var ratingObj = thisMovie.ratings[index];
+        source = $("#user-table-item").html();
+        template = Handlebars.compile(source);
+        context = {
+          userId: ratingObj.user_id,
+          userScore: ratingObj.rating
+        };
+        html = template(context);
+        $('#mv-user-list').append(html);
+        // creating an event listener for our user element
+        var linkName = '.mv-user-name[user-Id=' + ratingObj.user_id + ']';
+        $(linkName).click(function(event){
+          event.preventDefault();
+          var specId = $(this).attr('user-Id');
+
+          $.ajax(apiGet('userId', specId)).done(function(response){
+            var user = new User(response);
+            user.displayUser();
+          });
+
+        });
+      }
+    }).bind(this));
 
 
   }
@@ -234,6 +225,7 @@ function User(dataObject) {
 
 User.prototype = {
   displayUser: function(){
+    $('.content').empty();
     var source = $("#user-info-container").html();
     var template = Handlebars.compile(source);
     var context = {
@@ -263,6 +255,7 @@ User.prototype = {
         $('.top-rated-list').prepend(html);
         var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
         $(linkName).click(function(event){
+          event.preventDefault();
           var specId = $(this).attr('movieId');
           console.log(specId);
           $.ajax(apiGet('movieId', specId)).done(function(response){
