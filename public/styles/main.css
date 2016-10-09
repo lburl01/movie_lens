@@ -192,37 +192,44 @@ header * {
   transform: translateX(21%); }
 
 #user-info {
-  padding-bottom: 2%; }
+  padding-bottom: 2%;
+  text-align: center; }
 
 #user-id {
   line-height: 1.5em;
   text-align: center; }
 
-.user-details {
-  text-align: center; }
+.list-item {
+  margin: 10px 15%; }
+
+.top-rated-list {
+  padding: 0; }
 
 .rated-movies-list {
   padding: 0;
   text-align: center; }
 
 #top-rated-container {
-  width: 70%;
+  width: 100%;
   background: red;
-  transform: translateX(17%);
   position: relative;
   padding: 1%;
-  margin: 2% 0;
   border: 0.75px solid #0b0004;
   background: #ebe3c2; }
+  #top-rated-container button {
+    position: absolute;
+    top: 4px;
+    left: 4px; }
 
 #my-top-rated {
   margin-top: 4%;
   display: inline-block;
-  transform: translate(148%);
   font-size: 1.25em; }
 
 #star-container {
-  float: right; }
+  position: absolute;
+  right: 5px;
+  top: 5px; }
 
 .star {
   height: 14px;
@@ -325,9 +332,6 @@ button {
 
 input {
   text-align: center; }
-
-.hidden {
-  display: none; }
 
 button {
   border-radius: 5px;

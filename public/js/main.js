@@ -75,9 +75,13 @@ function movieSearch(string){
 
 function userSearch(string){
   collapseSearch();
+  $('.content').empty();
   $.ajax(apiGet('userId', string)).done(function(response){
+    var thisUser = new User(response);
     console.log(response);
-  });
+    console.log(thisUser);
+    thisUser.displayUser();
+   });
   console.log("did a user search for " + string);
 }
 
@@ -149,21 +153,22 @@ Movie.prototype = {
     return genres;
   },
 
-  // getRatings: function(){
-  //   $.ajax(apiGet('ratings',this.id)).done((function(response){
-  //     for(var index = 0; index < response.length; index++){
-  //       for (var key in response[index]){
-  //         var currentObject = response[index];
-  //         if(key === "user_id"){
-  //           var name = currentObject[key];
-  //           this.ratings[name] = currentObject.rating;
-  //         }
-  //
-  //       }
-  //     }
-  //   }).bind(this));
-  //
-  // },
+  getRatings: function(){
+    $.ajax(apiGet('ratings',this.id)).done((function(response){
+      console.log(response);
+      for(var index = 0; index < response.length; index++){
+        for (var key in response[index]){
+          var currentObject = response[index];
+          if(key === "user_id"){
+            var name = currentObject[key];
+            this.ratings[name] = currentObject.rating;
+          }
+
+        }
+      }
+    }).bind(this));
+
+  },
 
   displayResult: function(listElem) {
     if(!listElem) {
@@ -187,7 +192,60 @@ Movie.prototype = {
 
 };
 
+function User(dataObject) {
+  this.id = dataObject.id;
+  this.age = dataObject.age;
+  this.gender = dataObject.gender;
+  this.occupation = dataObject.occupation;
+  this.zipCode = dataObject.zip_code;
+}
 
+User.prototype = {
+  displayUser: function(){
+    var source = $("#user-info-container").html();
+    var template = Handlebars.compile(source);
+    var context = {
+      "user-id": this.id,
+      "user-occupation": this.occupation,
+      "user-gender": this.gender,
+      "user-zip": this.zipCode,
+      "user-age": this.age
+    };
+    var html = template(context);
+    $('.content').append(html);
+
+    $('#my-ratings').click((function(event) {
+      event.preventDefault();
+      // start loop here
+      var source = $('#user-info-list-item').html();
+      var template = Handlebars.compile(source);
+      var context = {
+        "user-id": this.id,
+        "movie-id": 1,
+        "movie-title": "Title of a Movie",
+        "movie-year": 2016,
+        "movie-info": "dummy info blah blah blah",
+        "movie-rating": 3
+      };
+      var html = template(context);
+      $('.top-rated-list').prepend(html);
+      this.starRating($('#star-container'), context['movie-rating']);
+      //end loop here
+    }).bind(this));
+  },
+  starRating: function(container, rating){
+    if (!rating){
+      rating = 0;
+    }
+    for (var index = 0; index < rating; index++){
+      $('<i class ="star fa fa-star"></i>').appendTo(container);
+    }
+    for (index = 0; index < 5-rating; index++){
+      $('<i class ="star fa fa-star-o"></i>').appendTo(container);
+    }
+  }
+
+};
 
 // LAUNCH CODE:
 

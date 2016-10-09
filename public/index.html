@@ -112,22 +112,16 @@
         </script>
         <!--end of user-info template -->
 
-        <!-- .appendTo('.top-rated-list') -->
-        <script id="user-info-list-item" type="text/x-handlebars-template">
-            <li>
-                <div id="top-rated-container">
-                    <span id="{{movie-id}}">{{movie-title}}</span>
-                    <span id="star-container">
-
 <!-- .appendTo('.content') -->
     <script id="user-info-container" type="text/x-handlebars-template">
-        <div id="user-info-container" class="hidden">
+        <div id="user-info-container">
             <div id="user-info">
                 <h2 id="user-id">User ID: {{user-id}}</h2>
                 <p class="user-details">Occupation: {{user-occupation}}</p>
+                <p class="user-details">Age: {{user-age}}</p>
                 <p class="user-details">Gender: {{user-gender}}</p>
                 <p class="user-details">Zip Code: {{user-zip}}</p>
-                <span id="my-top-rated">My Movie Ratings</span>
+                <span id="my-top-rated"><a id="my-ratings" href="#">My Movie Ratings</a></span>
                 <ul class="top-rated-list">
                 </ul>
     </script>
@@ -135,28 +129,21 @@
 
 <!-- .appendTo('.top-rated-list') -->
     <script id="user-info-list-item" type="text/x-handlebars-template">
-        <li>
+        <li class="list-item">
             <div id="top-rated-container">
-                <span id="{{movie-id}}">{{movie-title}}</span>
-                <span id="star-container">
-              <i class="star fa fa-{{star}}"></i>
-              <i class="star fa fa-{{star}}"></i>
-              <i class="star fa fa-{{star}}"></i>
-              <i class="star fa fa-{{star}}"></i>
-              <i class="star fa fa-{{star}}"></i>
-              </span>
-                    <select id="rate-it">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="delete">Delete</option>
-              </select>
-                    <p id="year">{{movie-year}}/p>
-                        <p id="rated-movie-info">{{movie-info}}</p>
-                </div>
-            </li>
+                <button class="delete" movieId="{{movie-id}}" userId="{{user-id}}">DELETE</button>
+                <span id="movie-title" movieId="{{movie-id}}">{{movie-title}}</span>
+                <span id="star-container" movieId="{{movie-id}}" userId="{{user-id}}">
+                  <!-- <i class="star fa fa-{{star}}"></i>
+                  <i class="star fa fa-{{star}}"></i>
+                  <i class="star fa fa-{{star}}"></i>
+                  <i class="star fa fa-{{star}}"></i>
+                  <i class="star fa fa-{{star}}"></i> -->
+                </span>
+                <p id="year">{{movie-year}}</p>
+                <p id="rated-movie-info">{{movie-info}}</p>
+            </div>
+          </li>
         </script>
         <!-- end of list item in user-info -->
 
