@@ -59,10 +59,13 @@ get '/api/users/:id' do
 end
 
 get '/api/movies/all/:id' do
-  movie = Movie.select('title, imdb_url, id, avg(rating), count(rating), unknown_genre, action, adventure, animation, children, comedy, crime, documentary, drama, fantasy, film_noir, horror, musical, mystery, romance, sci_fi, thriller, war, western').joins("INNER JOIN ratings ON movies.id = ratings.movie_id").where(id: params['id']).group('title, imdb_url, id')
-  ratings = Rating.select(:movie_id, :rating).joins("INNER JOIN users ON ratings.user_id = users.id").where(movie_id: params[:id]).joins("INNER JOIN movies ON ratings.movie_id = movies.id").all
-  payload = {'movie' => movie, 'ratings' => ratings}
-  payload.to_json
+  movie = Movie.select('title, imdb_url, id, avg(rating), count(rating), unknown_genre, action, adventure, animation, children, comedy, crime, documentary, drama, fantasy, film_noir, horror, musical, mystery, romance, sci_fi, thriller, war, western').joins("INNER JOIN ratings ON movies.id = ratings.movie_id").where(id: params['id']).group('title, imdb_url, id').first
+
+  ratings = Rating.select(:user_id, :rating).joins("INNER JOIN users ON ratings.user_id = users.id").where(movie_id: params[:id]).joins("INNER JOIN movies ON ratings.movie_id = movies.id").all
+
+  movie_hash = movie.as_json
+  movie_hash['ratings'] = ratings.as_json
+  movie_hash.to_json
 end
 
 get '/api/movies_count' do
