@@ -188,7 +188,7 @@ Movie.prototype = {
     var template = Handlebars.compile(source);
     var context = {
       "movie-Id": this.id,
-      title: this.title,
+      title: this.title+ " " +this.id,
       ratingCount: this.ratingsCount,
       ratingAverage: this.average
     };
@@ -256,14 +256,14 @@ User.prototype = {
         var context = {
           "user-id": this.id,
           "movie-id": ratingObj.movie_id,
-          "movie-title": ratingObj.title,
+          "movie-title": ratingObj.title + " " + ratingObj.movie_id,
           "movie-rating": ratingObj.rating
         };
         var html = template(context);
         $('.top-rated-list').prepend(html);
         var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
         $(linkName).click(function(event){
-          var specId = $('.movie-title').attr('movieId');
+          var specId = $(this).attr('movieId');
           console.log(specId);
           $.ajax(apiGet('movieId', specId)).done(function(response){
             var movie = new Movie(response);
