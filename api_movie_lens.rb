@@ -44,7 +44,7 @@ get '/api/movies/title' do
 end
 
 get '/api/movies/title_avg_rating' do
-  movie_info = Movie.select(:title, :rating, :id).joins("FULL OUTER JOIN ratings ON movies.id = ratings.movie_id").where('title like (?)', "%#{params['search']}%").group(:title).average(:rating).to_json
+  movie_info = Movie.select('title, imdb_url, id, avg(rating), count(rating)').joins("INNER JOIN ratings ON movies.id = ratings.movie_id").where('title like (?)', "%#{params['search']}%").group('title, imdb_url, id').to_json
 end
 
 get '/api/users/:id' do
