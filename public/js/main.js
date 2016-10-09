@@ -24,7 +24,7 @@ function apiGet(queryType, query){
       endPoint = '/api/users/' + query;
       break;
     case 'movieId': // get Movie by movieID
-      endPoint = '/api/movies/' + query;
+      endPoint = '/api/movies/all/' + query;
       break;
     case 'ratingAverage': // get average rating by movieID
       endPoint = '/api/ratings/average/' + query;
@@ -64,12 +64,11 @@ function movieSearch(string){
   collapseSearch();
   $('.content').empty();
   $.ajax(apiGet('movieTitleRatings', string)).done(function(response){
+    var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
     for (var index = 0; index < response.length; index++){
       var thisMovie = new Movie(response[index]);
-      var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
       thisMovie.displayResult(listElem);
-      console.log(thisMovie);
-    }
+     }
   });
 }
 
@@ -106,20 +105,15 @@ function Movie(dataObject) {
   this.title = dataObject.title;
   this.date = dataObject.release_date;
   this.imbd = dataObject.imdb_url;
-  // this.genre = this.getGenre(dataObject);
+  this.genre = this.getGenre(dataObject);
   this.average = round(dataObject.avg, 1);
   this.ratingsCount = dataObject.count;
-  // this.getRatings();
+  this.ratings = dataObject.ratings;
+  console.log(this);
 }
 
 Movie.prototype = {
-  // getAverage: function(){
-  //   var average;
-  //   $.ajax(apiGet('ratingAverage', this.id)).done((function(response, average){
-  //     average = round(response, 1);
-  //     this.average = average;
-  //   }).bind(this));
-  // },
+
   getGenre: function(dataObject){
     var genreDictionary = {
       "unknown_genre":0,
@@ -153,55 +147,85 @@ Movie.prototype = {
     return genres;
   },
 
-  getRatings: function(){
-    $.ajax(apiGet('ratings',this.id)).done((function(response){
-      console.log(response);
-      for(var index = 0; index < response.length; index++){
-        for (var key in response[index]){
-          var currentObject = response[index];
-          if(key === "user_id"){
-            var name = currentObject[key];
-            this.ratings[name] = currentObject.rating;
-          }
-
-        }
-      }
-    }).bind(this));
-
-  },
-
   displayResult: function(listElem) {
     if(!listElem) {
       console.log("listElem is not defined.");
       return;
     }
-    console.log(this);
-    console.log(this.average);
     var source = $("#movie-result").html();
     var template = Handlebars.compile(source);
     var context = {
-      movieId: this.id,
+      "movie-Id": this.id,
       title: this.title,
       ratingCount: this.ratingsCount,
       ratingAverage: this.average
     };
-    console.log(context);
     var html = template(context);
     $(listElem).prepend(html);
+    var id = this.id;
+    $('.ratings-count').attr("movie-Id", this.id).click((function(event){
+      this.displayFull();
+    }).bind(this));
+
   },
+
+  displayFull: function(){
+    $('.content').empty();
+    var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
+    $.ajax(apiGet('movieId', this.id)).done((function(response){
+      console.log(response);
+      var thisMovie = new Movie(response);
+      thisMovie.displayResult(listElem);
+// constuct handlebar template for movie body::
+      var source = $("#movie-result-body").html();
+      var template = Handlebars.compile(source);
+      var context = {
+      };
+      var html = template(context);
+      $('.movie-viewer').attr('movie-Id', thisMovie.id).append(html);
+      console.log(this);
+      for (var index = 0; index < thisMovie.ratings.length; index++){
+        var ratingObj = thisMovie.ratings[index];
+        source = $("#user-table-item").html();
+        template = Handlebars.compile(source);
+        context = {
+          userId: ratingObj.user_id,
+          userScore: ratingObj.rating
+        };
+        html = template(context);
+        $('#mv-user-list').append(html);
+        // creating an event listener for our user element
+        var linkName = '.mv-user-name[user-Id=' + ratingObj.user_id + ']';
+        $(linkName).click(function(event){
+          event.preventDefault();
+          var specId = $(this).attr('user-Id');
+
+          $.ajax(apiGet('userId', specId)).done(function(response){
+            var user = new User(response);
+            user.displayUser();
+          });
+
+        });
+      }
+    }).bind(this));
+
+
+  }
 
 };
 
 function User(dataObject) {
-  this.id = dataObject.id;
-  this.age = dataObject.age;
-  this.gender = dataObject.gender;
-  this.occupation = dataObject.occupation;
-  this.zipCode = dataObject.zip_code;
+  this.id = dataObject.user.id;
+  this.age = dataObject.user.age;
+  this.gender = dataObject.user.gender;
+  this.occupation = dataObject.user.occupation;
+  this.zipCode = dataObject.user.zip_code;
+  this.ratings = dataObject.ratings;
 }
 
 User.prototype = {
   displayUser: function(){
+    $('.content').empty();
     var source = $("#user-info-container").html();
     var template = Handlebars.compile(source);
     var context = {
@@ -217,19 +241,30 @@ User.prototype = {
     $('#my-ratings').click((function(event) {
       event.preventDefault();
       // start loop here
-      var source = $('#user-info-list-item').html();
-      var template = Handlebars.compile(source);
-      var context = {
-        "user-id": this.id,
-        "movie-id": 1,
-        "movie-title": "Title of a Movie",
-        "movie-year": 2016,
-        "movie-info": "dummy info blah blah blah",
-        "movie-rating": 3
-      };
-      var html = template(context);
-      $('.top-rated-list').prepend(html);
-      this.starRating($('#star-container'), context['movie-rating']);
+      for (var index = 0; index < this.ratings.length; index++) {
+        var ratingObj = this.ratings[index];
+        var source = $('#user-info-list-item').html();
+        var template = Handlebars.compile(source);
+        var context = {
+          "user-id": this.id,
+          "movie-id": ratingObj.movie_id,
+          "movie-title": ratingObj.title + " " + ratingObj.movie_id,
+          "movie-rating": ratingObj.rating
+        };
+        var html = template(context);
+        $('.top-rated-list').prepend(html);
+        var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
+        $(linkName).click(function(event){
+          event.preventDefault();
+          var specId = $(this).attr('movieId');
+          console.log(specId);
+          $.ajax(apiGet('movieId', specId)).done(function(response){
+            var movie = new Movie(response);
+            movie.displayFull();
+          });
+        });
+        this.starRating($('#star-container'), context['movie-rating']);
+      }
       //end loop here
     }).bind(this));
   },
