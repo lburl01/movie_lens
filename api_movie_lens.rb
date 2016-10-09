@@ -43,6 +43,10 @@ get '/api/movies/title' do
   end
 end
 
+get '/api/movies/title_avg_rating' do
+  movie_info = Movie.select(:title, :rating, :id).joins("FULL OUTER JOIN ratings ON movies.id = ratings.movie_id").where('title like (?)', "%#{params['search']}%").group(:title).average(:rating).to_json
+end
+
 get '/api/users/:id' do
   user = User.find_by_id(params['id'])
   if user.nil?
@@ -80,7 +84,7 @@ get '/api/ratings/average/:movie_id' do
 end
 
 get '/api/ratings/all_ratings/:movie_id' do
-  appts = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
+  ratings = Rating.select(:movie_id, :user_id, :title, :rating).joins("FULL OUTER JOIN movies ON ratings.movie_id = movies.id").where(movie_id: params['movie_id']).joins("FULL OUTER JOIN users ON ratings.user_id = users.id").all.to_json
 end
 
 post '/api/new_user' do
