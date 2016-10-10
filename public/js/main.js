@@ -115,7 +115,6 @@ function round(value, precision) {
 // CONSTRUCTORS:
 
 function Movie(dataObject) {
-  console.log(dataObject);
   this.id = dataObject.id;
   this.title = dataObject.title;
   this.date = dataObject.release_date;
@@ -124,7 +123,6 @@ function Movie(dataObject) {
   this.average = round(dataObject.avg, 1);
   this.ratingsCount = dataObject.count;
   this.ratings = dataObject.ratings;
-  console.log(this);
 }
 
 Movie.prototype = {
@@ -190,7 +188,6 @@ Movie.prototype = {
     $('.content').empty();
     var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
     $.ajax(apiGet('movieId', this.id)).done((function(response){
-      console.log(response);
       var thisMovie = new Movie(response);
       thisMovie.displayResult(listElem);
 // constuct handlebar template for movie body::
@@ -259,7 +256,6 @@ User.prototype = {
 
     $('#my-ratings').one('click', (function(event) { // list movie ratings by user
       event.preventDefault();
-      console.log(event);
       // start loop here
       for (var index = 0; index < this.ratings.length; index++) {
         var ratingObj = this.ratings[index];
@@ -278,7 +274,6 @@ User.prototype = {
         $(linkName).click(function(event){
           event.preventDefault();
           var specId = $(this).attr('movieId');
-          console.log(specId);
           $.ajax(apiGet('movieId', specId)).done(function(response){
             var movie = new Movie(response);
             movie.displayFull();
@@ -386,17 +381,14 @@ if (window.location.hash.length > 0){
   } else if (hashString.includes('search=')) {
     hashString = hashString.replace('#search=','');
     hashString = hashString.replace('#','');
-    console.log(hashString);
     movieSearch(hashString);
   } else if (hashString.includes('user=')){
     hashString = hashString.replace('#user=','');
     hashString = hashString.replace('#','');
-    console.log(hashString);
     userSearch(hashString);
   } else if (hashString.includes('movie=')){
     hashString = hashString.replace('#movie=','');
     hashString = hashString.replace('#','');
-    console.log(hashString);
     $.ajax(apiGet('movieId', hashString)).done(function(response){
       var movie = new Movie(response);
       collapseSearch();
