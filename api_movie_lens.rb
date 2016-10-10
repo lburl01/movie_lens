@@ -104,7 +104,7 @@ post '/api/new_user' do
   status 201
 end
 
-put '/api/update_user' do #need to validate by user id and movie id/title
+put '/api/update_user' do # need to validate by user id and movie id/title
   u = User.find_by(id: params[:id])
   if u.nil?
     halt(404)
@@ -124,16 +124,17 @@ post '/api/new_rating' do
     status 201
 end
 
-# put '/api/update_rating' do
-#   r = Rating.find_by(user_id: params['user_id'], movie_id: params['movie_id'])
-#   if r.nil?
-#     halt(404)
-#   end
-#   status 200
-#   r.update(
-#     params['user_id'],
-#     params['movie_id'],
-#     :rating => params['rating'],
-#     :timestamp => params['timestamp']
-#   ).to_json
-# end
+put '/api/update_rating' do 
+  r = Rating.where(user_id: params['user_id'], movie_id: params['movie_id'])
+  if r.nil?
+    halt(404)
+  else
+    status 200
+    r.update_all(
+      :user_id => params['user_id'],
+      :movie_id => params['movie_id'],
+      :rating => params['rating'],
+      :timestamp => params['timestamp']
+    ).to_json
+  end
+end
