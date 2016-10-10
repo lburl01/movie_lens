@@ -169,14 +169,14 @@ Movie.prototype = {
     var template = Handlebars.compile(source);
     var context = {
       "movie-Id": this.id,
-      title: this.title,
+      title: this.title + " " + this.id,
       ratingCount: this.ratingsCount,
       ratingAverage: this.average
     };
     var html = template(context);
     $(listElem).prepend(html);
-    var id = this.id;
-    $('.ratings-count').attr("movie-Id", this.id).click((function(event){
+    var linkName = '.ratings-count[movie-Id=' + this.id + ']';
+    $(linkName).click((function(event){
       this.displayFull();
     }).bind(this));
 
@@ -251,7 +251,7 @@ User.prototype = {
     var html = template(context);
     $('.content').append(html);
 
-    $('#my-ratings').click((function(event) {
+    $('#my-ratings').click((function(event) { // list movie ratings by user
       event.preventDefault();
       // start loop here
       for (var index = 0; index < this.ratings.length; index++) {
