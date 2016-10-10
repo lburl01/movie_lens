@@ -8,6 +8,10 @@ var topRatedButton = $('top-rated');
 
 // GLOBAL FUNCTIONS
 
+function updateHash(string) {
+  window.location.hash = string;
+}
+
 function apiGet(queryType, query){
 
   var baseUrl = "https://arcane-woodland-29724.herokuapp.com";
@@ -76,6 +80,7 @@ function handleError(){
 function movieSearch(string){
   collapseSearch();
   $('.content').empty();
+  updateHash("search=" + string);
   $.ajax(apiGet('movieTitleRatings', string)).done(function(response){
     var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
     for (var index = 0; index < response.length; index++){
@@ -90,11 +95,8 @@ function userSearch(string){
   $('.content').empty();
   $.ajax(apiGet('userId', string)).done(function(response){
     var thisUser = new User(response);
-    console.log(response);
-    console.log(thisUser);
     thisUser.displayUser();
    });
-  console.log("did a user search for " + string);
 }
 
 function collapseSearch(){
@@ -169,20 +171,22 @@ Movie.prototype = {
     var template = Handlebars.compile(source);
     var context = {
       "movie-Id": this.id,
-      title: this.title + " " + this.id,
+      title: this.title,
       ratingCount: this.ratingsCount,
       ratingAverage: this.average
     };
     var html = template(context);
-    $(listElem).prepend(html);
+    $(html).prependTo(listElem).hide().fadeIn('fast');
     var linkName = '.ratings-count[movie-Id=' + this.id + ']';
     $(linkName).click((function(event){
+      event.preventDefault();
       this.displayFull();
     }).bind(this));
 
   },
 
   displayFull: function(){
+    updateHash('movie=' + this.id);
     $('.content').empty();
     var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
     $.ajax(apiGet('movieId', this.id)).done((function(response){
@@ -196,7 +200,6 @@ Movie.prototype = {
       };
       var html = template(context);
       $('.movie-viewer').attr('movie-Id', thisMovie.id).append(html);
-      console.log(this);
       for (var index = 0; index < thisMovie.ratings.length; index++){
         var ratingObj = thisMovie.ratings[index];
         source = $("#user-table-item").html();
@@ -238,6 +241,7 @@ function User(dataObject) {
 
 User.prototype = {
   displayUser: function(){
+    updateHash("user=" + this.id);
     $('.content').empty();
     var source = $("#user-info-container").html();
     var template = Handlebars.compile(source);
@@ -249,10 +253,13 @@ User.prototype = {
       "user-age": this.age
     };
     var html = template(context);
-    $('.content').append(html);
+    // $('.content').append(html);
+    // $('.content').append(html);
+    $(html).appendTo('.content').hide().fadeIn('fast');
 
-    $('#my-ratings').click((function(event) { // list movie ratings by user
+    $('#my-ratings').one('click', (function(event) { // list movie ratings by user
       event.preventDefault();
+      console.log(event);
       // start loop here
       for (var index = 0; index < this.ratings.length; index++) {
         var ratingObj = this.ratings[index];
@@ -261,11 +268,12 @@ User.prototype = {
         var context = {
           "user-id": this.id,
           "movie-id": ratingObj.movie_id,
-          "movie-title": ratingObj.title + " " + ratingObj.movie_id,
+          "movie-title": ratingObj.title,
           "movie-rating": ratingObj.rating
         };
         var html = template(context);
-        $('.top-rated-list').prepend(html);
+        // $('.top-rated-list').prepend(html);
+        $(html).prependTo('.top-rated-list').hide().fadeIn('fast');
         var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
         $(linkName).click(function(event){
           event.preventDefault();
@@ -309,6 +317,11 @@ User.prototype = {
 
 // LAUNCH CODE:
 
+$('#headline').click(function() {
+  $('.content').empty();
+  expandSearch();
+});
+
 $('#manage-users-btn').click(function(event){
   collapseSearch();
   $('.content').empty();
@@ -350,7 +363,6 @@ $('#manage-users-btn').click(function(event){
 
 });
 
-
 $('#search-form').submit(function(event){
   event.preventDefault();
   var searchString = movieSearchField.val();
@@ -364,3 +376,33 @@ $('#user-search-form').submit(function(event){
   userSearchField.val('');
   userSearch(searchString);
 });
+
+// check for bookmarked search:
+if (window.location.hash.length > 0){
+  hashString = window.location.hash;
+  if (hashString === "#home"){
+    $('.content').empty();
+    expandSearch();
+  } else if (hashString.includes('search=')) {
+    hashString = hashString.replace('#search=','');
+    hashString = hashString.replace('#','');
+    console.log(hashString);
+    movieSearch(hashString);
+  } else if (hashString.includes('user=')){
+    hashString = hashString.replace('#user=','');
+    hashString = hashString.replace('#','');
+    console.log(hashString);
+    userSearch(hashString);
+  } else if (hashString.includes('movie=')){
+    hashString = hashString.replace('#movie=','');
+    hashString = hashString.replace('#','');
+    console.log(hashString);
+    $.ajax(apiGet('movieId', hashString)).done(function(response){
+      var movie = new Movie(response);
+      collapseSearch();
+      movie.displayFull();
+    });
+  }
+}
+
+window.location.hash = "home";

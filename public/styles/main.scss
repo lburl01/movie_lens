@@ -33,6 +33,13 @@ a {
 
 }
 
+#headline {
+  color: $beige-color;
+  &:hover {
+    color: $bright-red-color;
+  }
+}
+
 body {
     margin: 0 15%;
     position: relative;

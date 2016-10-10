@@ -320,6 +320,11 @@ a {
   a:active {
     color: whitesmoke; }
 
+#headline {
+  color: #dacba9; }
+  #headline:hover {
+    color: #ff2524; }
+
 body {
   margin: 0 15%;
   position: relative;
