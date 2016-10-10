@@ -18,6 +18,7 @@ function apiGet(queryType, query, dataObject){
   var endPoint;
   var method = "GET";
   dataObject = (!dataObject) ? {} : dataObject;
+  query = (!query) ? '' : query;
   switch (queryType) { // query dictionary
     case 'movieTitle': // Search Method
       endPoint = '/api/movies/title?search=' + query;
@@ -41,7 +42,7 @@ function apiGet(queryType, query, dataObject){
     break;
     case 'newUser':
       method = "POST";
-      endPoint = '/api/new_user/' + query;
+      endPoint = '/api/new_user/';
     break;
     case 'ratingAverage': // get average rating by movieID
       endPoint = '/api/ratings/average/' + query;
@@ -251,7 +252,10 @@ User.prototype = {
     // $('.content').append(html);
     // $('.content').append(html);
     $(html).appendTo('.content').hide().fadeIn('fast');
+    $('#user-delete').one('click', function(event){
+      //delete a user.
 
+    });
     $('#my-ratings').one('click', (function(event) { // list movie ratings by user
       event.preventDefault();
       // start loop here
@@ -315,10 +319,10 @@ User.prototype = {
     if (gender === 'F' || gender === 'M' || gender === 'NA'){
       $('#' + gender).attr('selected', 'selected'); // set displayed gender as user's gender
     }
-    $('.submit').one('click', (function(event){
+    $('#submit-edit').one('click', (function(event){
       event.preventDefault();
       var dataObject = {
-        "age":$('#edit-age').val(),
+        "age":$('#new-age').val(),
         "gender":$('#new-gender option:selected').text(),
         "occupation":$('#edit-occupation').val(),
         "zip_code":$('#edit-zip').val()
@@ -327,7 +331,7 @@ User.prototype = {
         this.displayUser();
       }).bind(this));
     }).bind(this));
-  }
+  },
 };
 
 // LAUNCH CODE:
@@ -355,6 +359,25 @@ $('#manage-users-btn').click(function(event){
     };
     var html = template(context);
     $('#manage-users-menu').append(html);
+    $('#add-user-form').submit(function(event) {
+      event.preventDefault();
+    });
+    $('#submit-add').one('click', function(event){
+      var dataObject = {
+        "age":$('#new-age').val(),
+        "gender":$('#new-gender option:selected').text(),
+        "occupation":$('#new-occupation').val(),
+        "zip_code":$('#new-zip').val()
+      };
+      console.log(dataObject);
+      $.ajax(apiGet('newUser','', dataObject)).done(function(response){
+        console.log('sent stuff to make new user.');
+        console.log(response);
+      });
+    });
+    // $.ajax(apiGet('newUser', '')).done(function(response){
+    //   var thisUser = new User(response);
+    // });
   });
   //Edit Button Behavior
   $('#edit-user-btn').click(function(event){

@@ -183,6 +183,15 @@ header * {
 .content {
   color: #560001; }
 
+#user-delete {
+  display: block;
+  margin: auto;
+  background: #ebe3c2;
+  border: 1px solid #560001; }
+  #user-delete:active {
+    background: #560001;
+    border: 1px solid #ebe3c2; }
+
 #user-info-container {
   margin: 3% 0;
   position: relative;

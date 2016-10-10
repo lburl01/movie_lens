@@ -98,6 +98,7 @@
                 <p class="user-details">Age: {{user-age}}</p>
                 <p class="user-details">Gender: {{user-gender}}</p>
                 <p class="user-details">Zip Code: {{user-zip}}</p>
+                <button id="user-delete">Delete User</button>
                 <span id="my-top-rated"><a id="my-ratings" href="#">My Movie Ratings</a></span>
                 <ul class="top-rated-list">
                 </ul>
@@ -143,12 +144,15 @@
             <div id="add-user-div" class="">
                 <form id="add-user-form">
                     <h2>Add a New User</h2>
+                    <input id="new-age" type="text" name="new-age" placeholder="New User Age"></input>
                     <input id="new-occupation" type="text" name="new-occupation" placeholder="New User Occupation"></input>
                     <input id="new-zip" type="text" name="new-zip" placeholder="New User Zipcode"></input>
+                    <p>Gender</p>
                     <select id="new-gender" id="gender" type="text" name="new-user">
               <!-- <option>Gender</option> -->
-              <option id="f" value="F">F</option>
-              <option id="m" value="M">M</option>
+              <option value=''></option>
+              <option id="f" value="F">Female</option>
+              <option id="m" value="M">Male</option>
               <option id="na" value="NA">No Answer</option>
             </select>
                     <button id="submit-add" type="button">Submit</button>

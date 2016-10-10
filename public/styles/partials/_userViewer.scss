@@ -4,7 +4,16 @@
     color: $red-color;
 }
 
-
+#user-delete {
+  display: block;
+  margin: auto;
+  background: $light-beige-color;
+  border: 1px solid $red-color;
+  &:active {
+    background: $red-color;
+    border: 1px solid $light-beige-color;
+  }
+}
 #user-info-container {
     margin: 3% 0;
     position: relative;
