@@ -291,8 +291,20 @@ User.prototype = {
     for (index = 0; index < 5-rating; index++){
       $('<i class ="star fa fa-star-o"></i>').appendTo(container);
     }
-  }
+  },
 
+  editUser: function() {
+    if (this.id === undefined) {
+      $('<p>').html('That User Does Not Exist.');
+    }
+    var source = $('#edit-user-body').html();
+    var template = Handlebars.compile(source);
+    var context = {
+      "userId": this.id,
+    };
+    var html = template(context);
+    $('#manage-users-menu').append(html);  //TODO: add event listener and ajax query
+  }
 };
 
 // LAUNCH CODE:
@@ -325,20 +337,15 @@ $('#manage-users-btn').click(function(event){
     };
     var html = template(context);
     $('#manage-users-menu').append(html);
-    //click event for edit user button
-    $('#edit-this-user-btn').click(function(event){
-      //make user object here
-
-      $('#edit-user-div').empty();
-      var source = $('#edit-user-body').html();
-      var template = Handlebars.compile(source);
-      var context = {
-        userId : this.id
-      };
-      var html = template(context);
-      $('#edit-user-div').append(html);
+    $('#search-users-form').submit(function(event){
+      event.preventDefault();
+      var searchString = $('#input-search-edit').val();
+      $.ajax(apiGet('userId',searchString)).done(function(response) {
+        var thisUser = new User(response);
+        thisUser.editUser();
+      });
+      });
     });
-  });
 
 
 });

@@ -128,9 +128,8 @@
         <script id="manage-users" type="text/x-handlebars-template">
             <div id="manage-users-container">
                 <section id="manage-users-section">
-                    <h2>Add, Delete, or Edit a User.</h2>
+                    <h2>Add or Edit a User.</h2>
                     <button id="add-user-btn">Add</button>
-                    <button id="delete-user-btn">Delete</button>
                     <button id="edit-user-btn">Edit</button>
                     <section id="manage-users-menu">
                     </section>
@@ -159,28 +158,12 @@
         </script>
 <!-- end of Add User Form -->
 
-<!-- Delete User Form, appendTo(#manage-users-section) -->
-        <script id="delete-user" type="text/x-handlebars-template">
-            <div id="delete-user-div" class="">
-                <div id="search-users">
-                    <form id="search-users-form" method="get">
-                        <input id="input-search-delete" class="show" placeholder="Search Users."></input>
-                    </form>
-                    <div id="user-to-delete">User Id: {{userId}}</div>
-                </div>
-                <button class="cancel-btn" type="button">Cancel</button>
-                <button id="delete-btn" type="button">Delete this User</button>
-            </div>
-        </script>
-<!-- end of Delete User Form -->
-
-
 <!--  Edit User Header, appendTo(#manage-users-section)-->
         <script id="edit-user-header" type="text/x-handlebars-template">
-            <div id="edit-user-div" class="">
+            <div id="edit-user-div">
                 <div id="search-users">
-                    <form id="search-users-form" method="get">
-                        <input id="input-search-edit" class="" placeholder="Search Users."></input>
+                    <form id="search-users-form">
+                        <input id="input-search-edit" type="text" placeholder="Search Users."></input>
                     </form>
                     <!-- <div id="user-to-edit">User Id: </div> -->
                 </div>
