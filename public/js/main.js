@@ -117,7 +117,7 @@ function Movie(dataObject) {
   this.id = dataObject.id;
   this.title = dataObject.title;
   this.date = dataObject.release_date;
-  this.imbd = dataObject.imdb_url;
+  this.imdb = dataObject.imdb_url;
   this.genre = this.getGenre(dataObject);
   this.average = round(dataObject.avg, 1);
   this.ratingsCount = dataObject.count;
@@ -170,7 +170,8 @@ Movie.prototype = {
       "movie-Id": this.id,
       title: this.title,
       ratingCount: this.ratingsCount,
-      ratingAverage: this.average
+      ratingAverage: this.average,
+      imdb: this.imdb
     };
     var html = template(context);
     $(html).prependTo(listElem).hide().fadeIn('fast');
