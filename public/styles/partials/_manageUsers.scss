@@ -11,23 +11,26 @@ select {
 }
 
 #manage-users-menu {
-  text-align: center;
+    text-align: center;
+    input {
+    line-height: 2;
+  }
 }
 
 #manage-users-menu * {
-  display: inline-block;
-  margin: 5px 0;
-  width: 100%;
-  padding: 3px 45px;
-}
+    display: inline-block;
+    margin: 5px 0;
+    width: 100%;
+    padding: 3px 45px;
 
+}
 
 #add-user-form {
     input {
+      line-height: 2;
         // display: block;
         // margin: 2% 30%;
     }
-
     // h2 {
     //     margin-top: 8%;
     // }
@@ -36,7 +39,8 @@ select {
 #edit-user-form {
     input {
         display: block;
-        margin: 2% 30%;
+        margin: 2% 0;
+        line-height: 2;
     }
 
     h2 {
@@ -44,12 +48,17 @@ select {
     }
 }
 
-.gender {
-    // transform: translateX(150%);
-    display: block;
+#new-gender {
+  // transform: translateX(150%);
+  display: table;
+  width: 40%;
+  margin: auto;
 }
 
-.submit {
+#submit-edit,
+#submit-add {
+  width: 50%;
+
     // margin: 3% 40%;
 }
 
@@ -84,11 +93,11 @@ select {
 }
 
 #input-search-edit {
-  padding: 0;
+    padding: 0;
 }
 
-#user-to-edit,
-#user-to-delete {
+#user-to-delete,
+#user-to-edit {
     margin: 3% 5%;
 }
 

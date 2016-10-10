@@ -254,6 +254,8 @@ select {
 
 #manage-users-menu {
   text-align: center; }
+  #manage-users-menu input {
+    line-height: 2; }
 
 #manage-users-menu * {
   display: inline-block;
@@ -261,14 +263,24 @@ select {
   width: 100%;
   padding: 3px 45px; }
 
+#add-user-form input {
+  line-height: 2; }
+
 #edit-user-form input {
   display: block;
-  margin: 2% 30%; }
+  margin: 2% 0;
+  line-height: 2; }
 #edit-user-form h2 {
   margin-top: 8%; }
 
-.gender {
-  display: block; }
+#new-gender {
+  display: table;
+  width: 40%;
+  margin: auto; }
+
+#submit-edit,
+#submit-add {
+  width: 50%; }
 
 #input-search-delete,
 #input-search-edit {
@@ -299,8 +311,8 @@ select {
 #input-search-edit {
   padding: 0; }
 
-#user-to-edit,
-#user-to-delete {
+#user-to-delete,
+#user-to-edit {
   margin: 3% 5%; }
 
 #new-id {

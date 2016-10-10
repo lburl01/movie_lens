@@ -145,13 +145,13 @@
                     <h2>Add a New User</h2>
                     <input id="new-occupation" type="text" name="new-occupation" placeholder="New User Occupation"></input>
                     <input id="new-zip" type="text" name="new-zip" placeholder="New User Zipcode"></input>
-                    <select id="new-gender" class="gender" type="text" name="new-user">
-              <option>Gender</option>
+                    <select id="new-gender" id="gender" type="text" name="new-user">
+              <!-- <option>Gender</option> -->
               <option id="f" value="F">F</option>
               <option id="m" value="M">M</option>
               <option id="na" value="NA">No Answer</option>
             </select>
-                    <button class="submit" type="button">Submit</button>
+                    <button id="submit-add" type="button">Submit</button>
                 </form>
                 <!-- <div class="show" id="new-id">Your new User Id is: {{userId}}</div> -->
             </div>
@@ -176,16 +176,15 @@
             <div id="edit-user-div" class="">
                 <form id="edit-user-form">
                     <h2>Edit User: {{userId}}</h2>
-                    <input id="edit-user" type="text" name="edit-user" placeholder="UserId"></input>
-                    <input id="edit-occupation" type="text" name="edit-occupation" placeholder="User Occupation"></input>
-                    <input id="edit-zip" type="text" name="edit-zip" placeholder="User Zipcode"></input>
-                    <select id="new-gender" class="gender" type="text" name="new-user">
-                    <option>Gender</option>
-                    <option id="f" value="F">F</option>
-                    <option id="m" value="M">M</option>
-                    <option id="na" value="NA">No Answer</option>
+                    <input id="edit-age" type="text" name="edit-age" placeholder="{{age}}"></input>
+                    <input id="edit-occupation" type="text" name="edit-occupation" placeholder="{{occupation}}"></input>
+                    <input id="edit-zip" type="text" name="edit-zip" placeholder="{{zip-code}}"></input>
+                    <select id="new-gender" id="gender" type="text" name="new-user" selected="{{gender}}">
+                    <option id="F" value="F">Female</option>
+                    <option id="M" value="M">Male</option>
+                    <option id="NA" value="NA">No Answer</option>
                   </select>
-                    <button class="submit" type="button">Submit Changes</button>
+                    <button id="submit-edit" type="button">Submit</button>
                 </form>
             </div>
         </script>

@@ -12,12 +12,12 @@ function updateHash(string) {
   window.location.hash = string;
 }
 
-function apiGet(queryType, query){
+function apiGet(queryType, query, dataObject){
 
   var baseUrl = "https://arcane-woodland-29724.herokuapp.com";
   var endPoint;
   var method = "GET";
-
+  dataObject = (!dataObject) ? {} : dataObject;
   switch (queryType) { // query dictionary
     case 'movieTitle': // Search Method
       endPoint = '/api/movies/title?search=' + query;
@@ -58,15 +58,13 @@ function apiGet(queryType, query){
     async: true,
     crossDomain: false,
     url: baseUrl + endPoint,
-    method: "GET",
+    method: method,
     processData: false,
     error: handleError,
     headers: {
 
     },
-    data: {
-      "some": "json"
-    },
+    data: dataObject,
     dataType: 'json'
   };
 
@@ -297,16 +295,38 @@ User.prototype = {
   },
 
   editUser: function() {
+    $('#edit-user-div').empty();
     if (this.id === undefined) {
       $('<p>').html('That User Does Not Exist.');
     }
+    console.log(this);
     var source = $('#edit-user-body').html();
     var template = Handlebars.compile(source);
     var context = {
       "userId": this.id,
+      "age": this.age,
+      "occupation": this.occupation,
+      "zip-code": this.zipCode
     };
+    console.log(context);
     var html = template(context);
-    $('#manage-users-menu').append(html);  //TODO: add event listener and ajax query
+    $('#manage-users-menu').append(html);
+    var gender = this.gender;
+    if (gender === 'F' || gender === 'M' || gender === 'NA'){
+      $('#' + gender).attr('selected', 'selected'); // set displayed gender as user's gender
+    }
+    $('.submit').one('click', (function(event){
+      event.preventDefault();
+      var dataObject = {
+        "age":$('#edit-age').val(),
+        "gender":$('#new-gender option:selected').text(),
+        "occupation":$('#edit-occupation').val(),
+        "zip_code":$('#edit-zip').val()
+      };
+      $.ajax(apiGet('updateUser', this.id, dataObject)).done((function(response){
+        this.displayUser();
+      }).bind(this));
+    }).bind(this));
   }
 };
 
