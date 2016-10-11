@@ -108,6 +108,7 @@ post '/api/new_user' do
     end
     status 400
   end
+  halt(400)
 end
 
 put '/api/update_user' do # need to validate by user id and movie id/title
