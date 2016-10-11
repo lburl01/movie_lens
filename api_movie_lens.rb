@@ -114,7 +114,7 @@ end
 put '/api/update_user' do # need to validate by user id and movie id/title
   u = User.find_by(id: params[:id])
   if u.nil?
-    halt(404)
+    halt(400)
   end
   status 200
   u.update(
