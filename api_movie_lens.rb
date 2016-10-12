@@ -100,14 +100,21 @@ get '/api/ratings/all_ratings/:movie_id' do
 end
 
 post '/api/new_user' do
-  User.create(id: User.maximum(:id).next, age: params['age'], gender: params['gender'], occupation: params['occupation'], zip_code: params['zip_code']).to_json
-  status 201
+  user = User.new(id: User.maximum(:id).next, age: params['age'], gender: params['gender'], occupation: params['occupation'], zip_code: params['zip_code'])
+  if user.valid?
+    if user.save
+      status 201
+      return user.to_json
+    end
+    status 400
+  end
+  halt(400)
 end
 
 put '/api/update_user' do # need to validate by user id and movie id/title
   u = User.find_by(id: params[:id])
   if u.nil?
-    halt(404)
+    halt(400)
   end
   status 200
   u.update(
@@ -124,7 +131,7 @@ post '/api/new_rating' do
     status 201
 end
 
-put '/api/update_rating' do 
+put '/api/update_rating' do
   r = Rating.where(user_id: params['user_id'], movie_id: params['movie_id'])
   if r.nil?
     halt(404)
