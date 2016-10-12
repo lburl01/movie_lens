@@ -18,6 +18,7 @@ function apiGet(queryType, query, dataObject){
   var endPoint;
   var method = "GET";
   dataObject = (!dataObject) ? {} : dataObject;
+  console.log(dataObject);
   query = (!query) ? '' : query;
   switch (queryType) { // query dictionary
     case 'movieTitle': // Search Method
@@ -42,7 +43,7 @@ function apiGet(queryType, query, dataObject){
     break;
     case 'newUser':
       method = "POST";
-      endPoint = '/api/new_user/';
+      endPoint = '/api/new_user';
     break;
     case 'ratingAverage': // get average rating by movieID
       endPoint = '/api/ratings/average/' + query;
@@ -57,18 +58,14 @@ function apiGet(queryType, query, dataObject){
 
   var settings = {
     async: true,
-    crossDomain: false,
+    crossDomain: true,
     url: baseUrl + endPoint,
     method: method,
-    processData: false,
     error: handleError,
-    headers: {
-
-    },
     data: dataObject,
-    dataType: 'json'
   };
-
+  console.log("after apiGet");
+  console.log(settings);
   return settings;
 }
 
@@ -93,6 +90,7 @@ function userSearch(string){
   collapseSearch();
   $('.content').empty();
   $.ajax(apiGet('userId', string)).done(function(response){
+    console.log(JSON.stringify(response));
     var thisUser = new User(response);
     thisUser.displayUser();
    });
@@ -323,13 +321,14 @@ User.prototype = {
     $('#submit-edit').one('click', (function(event){
       event.preventDefault();
       var dataObject = {
-        "age":$('#new-age').val(),
+        "age":$('#edit-age').val(),
         "gender":$('#new-gender option:selected').text(),
         "occupation":$('#edit-occupation').val(),
         "zip_code":$('#edit-zip').val()
       };
+      console.log(dataObject);
       $.ajax(apiGet('updateUser', this.id, dataObject)).done((function(response){
-        this.displayUser();
+        userSearch(this.id);
       }).bind(this));
     }).bind(this));
   },
@@ -365,15 +364,17 @@ $('#manage-users-btn').click(function(event){
     });
     $('#submit-add').one('click', function(event){
       var dataObject = {
-        "age":$('#new-age').val(),
-        "gender":$('#new-gender option:selected').text(),
-        "occupation":$('#new-occupation').val(),
-        "zip_code":$('#new-zip').val()
+        "age": Number($('#new-age').val()),
+        "gender": $('#new-gender option:selected').text(),
+        "occupation": $('#new-occupation').val(),
+        "zip_code": Number($('#new-zip').val())
       };
+      console.log("dataObject before apiGet");
       console.log(dataObject);
+      // dataObject = JSON.stringify(dataObject);
       $.ajax(apiGet('newUser','', dataObject)).done(function(response){
-        console.log('sent stuff to make new user.');
         console.log(response);
+        userSearch(response.id);
       });
     });
     // $.ajax(apiGet('newUser', '')).done(function(response){
@@ -414,6 +415,12 @@ $('#user-search-form').submit(function(event){
   var searchString = userSearchField.val();
   userSearchField.val('');
   userSearch(searchString);
+});
+
+$('.content').on('click', '#user-delete', function(event){
+  var userId = $('#user-id').html();
+  userId = userId.slice(9);
+  alert("Someday we will delete user " + userId + ", but not today!");
 });
 
 // check for bookmarked search:
