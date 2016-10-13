@@ -63,12 +63,17 @@
     }
 }
 
+#mv-user-list{
+  padding: 0px 40%;
+  margin: 0 0;
+}
+
 .movie-body {
     padding-top: 10px;
     border-top: 1px solid $red-color;
 
     .mv-user > span {
-        width: 400px;
+        width: 72px;
         display: table-cell;
         text-align: left;
         font-family: monaco;
@@ -84,6 +89,7 @@
             color: $bright-red-color;
             color: $bright-red-color;
             text-shadow: 0 0 9px $dark-color;
+            position: relative;
         }
     }
 
@@ -92,5 +98,9 @@
         font-size: 13px;
         border-bottom: dotted 1px whitesmoke;
         padding-left: 10px;
+    }
+
+    .mv-user {
+      text-align: left;
     }
 }
