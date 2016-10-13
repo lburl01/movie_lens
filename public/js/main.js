@@ -9,443 +9,477 @@ var topRatedButton = $('top-rated');
 // GLOBAL FUNCTIONS
 
 function updateHash(string) {
-  window.location.hash = string;
+    window.location.hash = string;
 }
 
-function apiGet(queryType, query, dataObject){
+function apiGet(queryType, query, dataObject) {
 
-  var baseUrl = "https://arcane-woodland-29724.herokuapp.com";
-  var endPoint;
-  var method = "GET";
-  dataObject = (!dataObject) ? {} : dataObject;
-  console.log(dataObject);
-  query = (!query) ? '' : query;
-  switch (queryType) { // query dictionary
-    case 'movieTitle': // Search Method
-      endPoint = '/api/movies/title?search=' + query;
-      break;
-    case 'movieTitleRatings': // Search Method
-      endPoint = '/api/movies/title_avg_rating?search=' + query;
-      break;
-    case 'userId': // get User by userID
-      endPoint = '/api/users/' + query;
-      break;
-    case 'movieId': // get Movie by movieID
-      endPoint = '/api/movies/all/' + query;
-      break;
-    case 'updateUser':
-      method = "PUT";
-      endPoint = '/api/update_user/' + query;
-    break;
-    case 'newRating':
-      method = "POST";
-      endPoint = '/api/new_rating/' + query;
-    break;
-    case 'newUser':
-      method = "POST";
-      endPoint = '/api/new_user';
-    break;
-    case 'ratingAverage': // get average rating by movieID
-      endPoint = '/api/ratings/average/' + query;
-      break;
-    case 'ratings': // get all ratings by movieID
-      endPoint = '/api/ratings/all_ratings/' + query;
-      break;
-    default:
-      endPoint = null;
-      break;
-  }
+    var baseUrl = "https://arcane-woodland-29724.herokuapp.com";
+    var endPoint;
+    var method = "GET";
+    dataObject = (!dataObject) ? {} : dataObject;
+    console.log(dataObject);
+    query = (!query) ? '' : query;
+    switch (queryType) { // query dictionary
+        case 'movieTitle': // Search Method
+            endPoint = '/api/movies/title?search=' + query;
+            break;
+        case 'movieTitleRatings': // Search Method
+            endPoint = '/api/movies/title_avg_rating?search=' + query;
+            break;
+        case 'userId': // get User by userID
+            endPoint = '/api/users/' + query;
+            break;
+        case 'movieId': // get Movie by movieID
+            endPoint = '/api/movies/all/' + query;
+            break;
+        case 'updateUser':
+            method = "PUT";
+            endPoint = '/api/update_user/' + query;
+            break;
+        case 'newRating':
+            method = "POST";
+            endPoint = '/api/new_rating/' + query;
+            break;
+        case 'newUser':
+            method = "POST";
+            endPoint = '/api/new_user';
+            break;
+        case 'ratingAverage': // get average rating by movieID
+            endPoint = '/api/ratings/average/' + query;
+            break;
+        case 'ratings': // get all ratings by movieID
+            endPoint = '/api/ratings/all_ratings/' + query;
+            break;
+        case 'updateRating': // change existing rating
+            method = "PUT";
+            endPoint = '/api/update_rating' + query;
+            break;
+        default:
+            endPoint = null;
+            break;
+    }
 
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: baseUrl + endPoint,
-    method: method,
-    error: handleError,
-    data: dataObject,
-  };
-  console.log("after apiGet");
-  console.log(settings);
-  return settings;
+    var settings = {
+        async: true,
+        crossDomain: true,
+        url: baseUrl + endPoint,
+        method: method,
+        error: handleError,
+        data: dataObject,
+    };
+    console.log("after apiGet");
+    console.log(settings);
+    return settings;
 }
 
-function handleError(){
-  console.log("There was an error :shrug:");
+function handleError() {
+    console.log("There was an error :shrug:");
 }
 
-function movieSearch(string){
-  collapseSearch();
-  $('.content').empty();
-  updateHash("search=" + string);
-  $.ajax(apiGet('movieTitleRatings', string)).done(function(response){
-    var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
-    for (var index = 0; index < response.length; index++){
-      var thisMovie = new Movie(response[index]);
-      thisMovie.displayResult(listElem);
-     }
-  });
+function movieSearch(string) {
+    collapseSearch();
+    $('.content').empty();
+    updateHash("search=" + string);
+    $.ajax(apiGet('movieTitleRatings', string)).done(function(response) {
+        var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
+        for (var index = 0; index < response.length; index++) {
+            var thisMovie = new Movie(response[index]);
+            thisMovie.displayResult(listElem);
+        }
+    });
 }
 
-function userSearch(string){
-  collapseSearch();
-  $('.content').empty();
-  $.ajax(apiGet('userId', string)).done(function(response){
-    console.log(JSON.stringify(response));
-    var thisUser = new User(response);
-    thisUser.displayUser();
-   });
+function userSearch(string) {
+    collapseSearch();
+    $('.content').empty();
+    $.ajax(apiGet('userId', string)).done(function(response) {
+        console.log(JSON.stringify(response));
+        var thisUser = new User(response);
+        thisUser.displayUser();
+    });
 }
 
-function collapseSearch(){
-  movieSearchField.removeClass('open').addClass('closed');
+function collapseSearch() {
+    movieSearchField.removeClass('open').addClass('closed');
 }
 
-function expandSearch(){
-  movieSearchField.removeClass('closed').addClass('open');
+function expandSearch() {
+    movieSearchField.removeClass('closed').addClass('open');
 }
 
 function round(value, precision) {
-   var multiplier = Math.pow(10, precision || 0);
-   return Math.round(value * multiplier) / multiplier;
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
 }
 
 // CONSTRUCTORS:
 
 function Movie(dataObject) {
-  this.id = dataObject.id;
-  this.title = dataObject.title;
-  this.date = dataObject.release_date;
-  this.imdb = dataObject.imdb_url;
-  this.genre = this.getGenre(dataObject);
-  this.average = round(dataObject.avg, 1);
-  this.ratingsCount = dataObject.count;
-  this.ratings = dataObject.ratings;
+    this.id = dataObject.id;
+    this.title = dataObject.title;
+    this.date = dataObject.release_date;
+    this.imdb = dataObject.imdb_url;
+    this.genre = this.getGenre(dataObject);
+    this.average = round(dataObject.avg, 1);
+    this.ratingsCount = dataObject.count;
+    this.ratings = dataObject.ratings;
 }
 
 Movie.prototype = {
 
-  getGenre: function(dataObject){
-    var genreDictionary = {
-      "unknown_genre":0,
-      "action":0,
-      "adventure":0,
-      "animation":0,
-      "children":0,
-      "comedy":0,
-      "crime":0,
-      "documentary":0,
-      "drama":0,
-      "fantasy":0,
-      "film_noir":0,
-      "horror":0,
-      "musical":0,
-      "mystery":0,
-      "romance":0,
-      "sci_fi":0,
-      "thriller":0,
-      "war":0,
-      "western":0
-    };
-    var genres = '';
-    for (var keyName in dataObject){
-      for (var genre in genreDictionary){
-        if (keyName === genre && dataObject[keyName] == 1){
-          genres += genre + "\n";
-        }
-      }
-    }
-    return genres;
-  },
-
-  displayResult: function(listElem) {
-    if(!listElem) {
-      console.log("listElem is not defined.");
-      return;
-    }
-    var source = $("#movie-result").html();
-    var template = Handlebars.compile(source);
-    var context = {
-      "movie-Id": this.id,
-      title: this.title,
-      ratingCount: this.ratingsCount,
-      ratingAverage: this.average,
-      imdb: this.imdb
-    };
-    var html = template(context);
-    $(html).prependTo(listElem).hide().fadeIn('fast');
-    var linkName = '.ratings-count[movie-Id=' + this.id + ']';
-    $(linkName).click((function(event){
-      event.preventDefault();
-      this.displayFull();
-    }).bind(this));
-
-  },
-
-  displayFull: function(){
-    updateHash('movie=' + this.id);
-    $('.content').empty();
-    var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
-    $.ajax(apiGet('movieId', this.id)).done((function(response){
-      var thisMovie = new Movie(response);
-      thisMovie.displayResult(listElem);
-// constuct handlebar template for movie body::
-      var source = $("#movie-result-body").html();
-      var template = Handlebars.compile(source);
-      var context = {
-      };
-      var html = template(context);
-      $('.movie-viewer').attr('movie-Id', thisMovie.id).append(html);
-      for (var index = 0; index < thisMovie.ratings.length; index++){
-        var ratingObj = thisMovie.ratings[index];
-        source = $("#user-table-item").html();
-        template = Handlebars.compile(source);
-        context = {
-          userId: ratingObj.user_id,
-          userScore: ratingObj.rating
+    getGenre: function(dataObject) {
+        var genreDictionary = {
+            "unknown_genre": 0,
+            "action": 0,
+            "adventure": 0,
+            "animation": 0,
+            "children": 0,
+            "comedy": 0,
+            "crime": 0,
+            "documentary": 0,
+            "drama": 0,
+            "fantasy": 0,
+            "film_noir": 0,
+            "horror": 0,
+            "musical": 0,
+            "mystery": 0,
+            "romance": 0,
+            "sci_fi": 0,
+            "thriller": 0,
+            "war": 0,
+            "western": 0
         };
-        html = template(context);
-        $('#mv-user-list').append(html);
-        // creating an event listener for our user element
-        var linkName = '.mv-user-name[user-Id=' + ratingObj.user_id + ']';
-        $(linkName).click(function(event){
-          event.preventDefault();
-          var specId = $(this).attr('user-Id');
+        var genres = '';
+        for (var keyName in dataObject) {
+            for (var genre in genreDictionary) {
+                if (keyName === genre && dataObject[keyName] == 1) {
+                    genres += genre + "\n";
+                }
+            }
+        }
+        return genres;
+    },
 
-          $.ajax(apiGet('userId', specId)).done(function(response){
-            var user = new User(response);
-            user.displayUser();
-          });
+    displayResult: function(listElem) {
+        if (!listElem) {
+            console.log("listElem is not defined.");
+            return;
+        }
+        var source = $("#movie-result").html();
+        var template = Handlebars.compile(source);
+        var context = {
+            "movie-Id": this.id,
+            title: this.title,
+            ratingCount: this.ratingsCount,
+            ratingAverage: this.average,
+            imdb: this.imdb
+        };
+        var html = template(context);
+        $(html).prependTo(listElem).hide().fadeIn('fast');
+        var linkName = '.ratings-count[movie-Id=' + this.id + ']';
+        $(linkName).click((function(event) {
+            event.preventDefault();
+            this.displayFull();
+        }).bind(this));
 
-        });
-      }
-    }).bind(this));
+    },
+
+    displayFull: function() {
+        updateHash('movie=' + this.id);
+        $('.content').empty();
+        var listElem = $('<ul>').attr('id', 'results').appendTo('.content');
+        $.ajax(apiGet('movieId', this.id)).done((function(response) {
+            var thisMovie = new Movie(response);
+            thisMovie.displayResult(listElem);
+            // constuct handlebar template for movie body::
+            var source = $("#movie-result-body").html();
+            var template = Handlebars.compile(source);
+            var context = {};
+            var html = template(context);
+            $('.movie-viewer').attr('movie-Id', thisMovie.id).append(html);
+            for (var index = 0; index < thisMovie.ratings.length; index++) {
+                var ratingObj = thisMovie.ratings[index];
+                source = $("#user-table-item").html();
+                template = Handlebars.compile(source);
+                context = {
+                    userId: ratingObj.user_id,
+                    userScore: ratingObj.rating
+                };
+                html = template(context);
+                $('#mv-user-list').append(html);
+                // creating an event listener for our user element
+                var linkName = '.mv-user-name[user-Id=' + ratingObj.user_id + ']';
+                $(linkName).click(function(event) {
+                    event.preventDefault();
+                    var specId = $(this).attr('user-Id');
+
+                    $.ajax(apiGet('userId', specId)).done(function(response) {
+                        var user = new User(response);
+                        user.displayUser();
+                    });
+
+                });
+            }
+        }).bind(this));
 
 
-  }
+    }
 
 };
 
 function User(dataObject) {
-  this.id = dataObject.user.id;
-  this.age = dataObject.user.age;
-  this.gender = dataObject.user.gender;
-  this.occupation = dataObject.user.occupation;
-  this.zipCode = dataObject.user.zip_code;
-  this.ratings = dataObject.ratings;
+    this.id = dataObject.user.id;
+    this.age = dataObject.user.age;
+    this.gender = dataObject.user.gender;
+    this.occupation = dataObject.user.occupation;
+    this.zipCode = dataObject.user.zip_code;
+    this.ratings = dataObject.ratings;
 }
 
 User.prototype = {
-  displayUser: function(){
-    updateHash("user=" + this.id);
-    $('.content').empty();
-    var source = $("#user-info-container").html();
-    var template = Handlebars.compile(source);
-    var context = {
-      "user-id": this.id,
-      "user-occupation": this.occupation,
-      "user-gender": this.gender,
-      "user-zip": this.zipCode,
-      "user-age": this.age
-    };
-    var html = template(context);
-    // $('.content').append(html);
-    // $('.content').append(html);
-    $(html).appendTo('.content').hide().fadeIn('fast');
-    $('#user-delete').one('click', function(event){
-      //delete a user.
-
-    });
-    $('#my-ratings').one('click', (function(event) { // list movie ratings by user
-      event.preventDefault();
-      // start loop here
-      for (var index = 0; index < this.ratings.length; index++) {
-        var ratingObj = this.ratings[index];
-        var source = $('#user-info-list-item').html();
+    displayUser: function() {
+        updateHash("user=" + this.id);
+        $('.content').empty();
+        var source = $("#user-info-container").html();
         var template = Handlebars.compile(source);
         var context = {
-          "user-id": this.id,
-          "movie-id": ratingObj.movie_id,
-          "movie-title": ratingObj.title,
-          "movie-rating": ratingObj.rating
+            "user-id": this.id,
+            "user-occupation": this.occupation,
+            "user-gender": this.gender,
+            "user-zip": this.zipCode,
+            "user-age": this.age
         };
         var html = template(context);
-        // $('.top-rated-list').prepend(html);
-        $(html).prependTo('.top-rated-list').hide().fadeIn('fast');
-        var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
-        $(linkName).click(function(event){
-          event.preventDefault();
-          var specId = $(this).attr('movieId');
-          $.ajax(apiGet('movieId', specId)).done(function(response){
-            var movie = new Movie(response);
-            movie.displayFull();
-          });
-        });
-        this.starRating($('#star-container'), context['movie-rating']);
-      }
-      //end loop here
-    }).bind(this));
-  },
-  starRating: function(container, rating){
-    if (!rating){
-      rating = 0;
-    }
-    for (var index = 0; index < rating; index++){
-      $('<i class ="star fa fa-star"></i>').appendTo(container);
-    }
-    for (index = 0; index < 5-rating; index++){
-      $('<i class ="star fa fa-star-o"></i>').appendTo(container);
-    }
-  },
+        // $('.content').append(html);
+        // $('.content').append(html);
+        $(html).appendTo('.content').hide().fadeIn('fast');
+        $('#user-delete').one('click', function(event) {
+            //delete a user.
 
-  editUser: function() {
-    $('#edit-user-div').empty();
-    if (this.id === undefined) {
-      $('<p>').html('That User Does Not Exist.');
-    }
-    console.log(this);
-    var source = $('#edit-user-body').html();
-    var template = Handlebars.compile(source);
-    var context = {
-      "userId": this.id,
-      "age": this.age,
-      "occupation": this.occupation,
-      "zip-code": this.zipCode
-    };
-    console.log(context);
-    var html = template(context);
-    $('#manage-users-menu').append(html);
-    var gender = this.gender;
-    if (gender === 'F' || gender === 'M' || gender === 'NA'){
-      $('#' + gender).attr('selected', 'selected'); // set displayed gender as user's gender
-    }
-    $('#submit-edit').one('click', (function(event){
-      event.preventDefault();
-      var dataObject = {
-        "age":$('#edit-age').val(),
-        "gender":$('#new-gender option:selected').text(),
-        "occupation":$('#edit-occupation').val(),
-        "zip_code":$('#edit-zip').val()
-      };
-      console.log(dataObject);
-      $.ajax(apiGet('updateUser', this.id, dataObject)).done((function(response){
-        userSearch(this.id);
-      }).bind(this));
-    }).bind(this));
-  },
+        });
+        $('#my-ratings').one('click', (function(event) { // list movie ratings by user
+            event.preventDefault();
+            // start loop here
+            for (var index = 0; index < this.ratings.length; index++) {
+                var ratingObj = this.ratings[index];
+                var source = $('#user-info-list-item').html();
+                var template = Handlebars.compile(source);
+                var context = {
+                    "user-id": this.id,
+                    "movie-id": ratingObj.movie_id,
+                    "movie-title": ratingObj.title,
+                    "movie-rating": ratingObj.rating
+                };
+                var html = template(context);
+                // $('.top-rated-list').prepend(html);
+                $(html).prependTo('.top-rated-list').hide().fadeIn('fast');
+                var linkName = '.movie-title[movieId=' + ratingObj.movie_id + ']';
+                $(linkName).click(function(event) {
+                    event.preventDefault();
+                    var specId = $(this).attr('movieId');
+                    $.ajax(apiGet('movieId', specId)).done(function(response) {
+                        var movie = new Movie(response);
+                        movie.displayFull();
+                    });
+                });
+                this.starRating($('#star-container'), context['movie-rating']);
+            }
+            //end loop here
+        }).bind(this));
+    },
+    starRating: function(container, rating) {
+        if (!rating) {
+            rating = 0;
+        }
+        var count = 0;//count will number the stars as they are built.
+        for (var index = 0; index < rating; index++) {
+          count ++;
+            $('<i class ="star fa fa-star" id=' + count + '></i>').appendTo(container);
+        }
+        for (index = 0; index < 5 - rating; index++) {
+          count ++;
+            $('<i class ="star fa fa-star-o" id=' + count + '></i>').appendTo(container);
+        }
+
+    },
+
+    editUser: function() {
+        $('#edit-user-div').empty();
+        if (this.id === undefined) {
+            $('<p>').html('That User Does Not Exist.');
+        }
+        console.log(this);
+        var source = $('#edit-user-body').html();
+        var template = Handlebars.compile(source);
+        var context = {
+            "userId": this.id,
+            "age": this.age,
+            "occupation": this.occupation,
+            "zip-code": this.zipCode
+        };
+        console.log(context);
+        var html = template(context);
+        $('#manage-users-menu').append(html);
+        var gender = this.gender;
+        if (gender === 'F' || gender === 'M' || gender === 'NA') {
+            $('#' + gender).attr('selected', 'selected'); // set displayed gender as user's gender
+        }
+        $('#submit-edit').one('click', (function(event) {
+            event.preventDefault();
+            var dataObject = {
+                "age": $('#edit-age').val(),
+                "gender": $('#new-gender option:selected').text(),
+                "occupation": $('#edit-occupation').val(),
+                "zip_code": $('#edit-zip').val()
+            };
+            console.log(dataObject);
+            $.ajax(apiGet('updateUser', this.id, dataObject)).done((function(response) {
+                userSearch(this.id);
+            }).bind(this));
+        }).bind(this));
+    },
+
 };
+
+/* newRating is number passed in from the id of the clicked star. The id and movie
+are collected from parent containers of the star. */
+function updateRating(newRating, id, movie) {
+  var timestamp = new Date();
+  var query = {
+    "user_id": id,
+    "movie_id": movie
+  };
+  var RatingObj = {
+    "user_id": id,
+    "movie_id": movie,
+    "rating": newRating,
+    "timestamp":timestamp
+  };
+  $.ajax(apiGet('updateRating',query, RatingObj)).done(function(response){
+    console.log("Updated info: " + response.user_id + response.movie_id + response.timestamp + response.rating);
+    alert("I bet you'd like to update this rating...not yet.");
+  });
+}
 
 // LAUNCH CODE:
 
 $('#headline').click(function() {
-  $('.content').empty();
-  expandSearch();
+    $('.content').empty();
+    expandSearch();
 });
 
-$('#manage-users-btn').click(function(event){
-  collapseSearch();
-  $('.content').empty();
-  var source = $('#manage-users').html();
-  var template = Handlebars.compile(source);
-  var context = {
-  };
-  var html = template(context);
-  $('.content').append(html);
-// Add button Behavior
-  $('#add-user-btn').click(function(event){
-    $('#manage-users-menu').empty();
-    var source = $('#add-user').html();
+$('#manage-users-btn').click(function(event) {
+    collapseSearch();
+    $('.content').empty();
+    var source = $('#manage-users').html();
     var template = Handlebars.compile(source);
-    var context = {
-    };
+    var context = {};
     var html = template(context);
-    $('#manage-users-menu').append(html);
-    $('#add-user-form').submit(function(event) {
-      event.preventDefault();
+    $('.content').append(html);
+    // Add button Behavior
+    $('#add-user-btn').click(function(event) {
+        $('#manage-users-menu').empty();
+        var source = $('#add-user').html();
+        var template = Handlebars.compile(source);
+        var context = {};
+        var html = template(context);
+        $('#manage-users-menu').append(html);
+        $('#add-user-form').submit(function(event) {
+            event.preventDefault();
+        });
+        $('#submit-add').one('click', function(event) {
+            var dataObject = {
+                "age": Number($('#new-age').val()),
+                "gender": $('#new-gender option:selected').text(),
+                "occupation": $('#new-occupation').val(),
+                "zip_code": Number($('#new-zip').val())
+            };
+            console.log("dataObject before apiGet");
+            console.log(dataObject);
+            // dataObject = JSON.stringify(dataObject);
+            $.ajax(apiGet('newUser', '', dataObject)).done(function(response) {
+                console.log(response);
+                userSearch(response.id);
+            });
+        });
+        // $.ajax(apiGet('newUser', '')).done(function(response){
+        //   var thisUser = new User(response);
+        // });
     });
-    $('#submit-add').one('click', function(event){
-      var dataObject = {
-        "age": Number($('#new-age').val()),
-        "gender": $('#new-gender option:selected').text(),
-        "occupation": $('#new-occupation').val(),
-        "zip_code": Number($('#new-zip').val())
-      };
-      console.log("dataObject before apiGet");
-      console.log(dataObject);
-      // dataObject = JSON.stringify(dataObject);
-      $.ajax(apiGet('newUser','', dataObject)).done(function(response){
-        console.log(response);
-        userSearch(response.id);
-      });
-    });
-    // $.ajax(apiGet('newUser', '')).done(function(response){
-    //   var thisUser = new User(response);
-    // });
-  });
-  //Edit Button Behavior
-  $('#edit-user-btn').click(function(event){
-    $('#manage-users-menu').empty();
-    var source = $('#edit-user-header').html();
-    var template = Handlebars.compile(source);
-    var context = {
-    };
-    var html = template(context);
-    $('#manage-users-menu').append(html);
-    $('#search-users-form').submit(function(event){
-      event.preventDefault();
-      var searchString = $('#input-search-edit').val();
-      $.ajax(apiGet('userId',searchString)).done(function(response) {
-        var thisUser = new User(response);
-        thisUser.editUser();
-      });
-      });
+    //Edit Button Behavior
+    $('#edit-user-btn').click(function(event) {
+        $('#manage-users-menu').empty();
+        var source = $('#edit-user-header').html();
+        var template = Handlebars.compile(source);
+        var context = {};
+        var html = template(context);
+        $('#manage-users-menu').append(html);
+        $('#search-users-form').submit(function(event) {
+            event.preventDefault();
+            var searchString = $('#input-search-edit').val();
+            $.ajax(apiGet('userId', searchString)).done(function(response) {
+                var thisUser = new User(response);
+                thisUser.editUser();
+            });
+        });
     });
 
 
 });
 
-$('#search-form').submit(function(event){
-  event.preventDefault();
-  var searchString = movieSearchField.val();
-  movieSearchField.val('');
-  movieSearch(searchString);
+$('#search-form').submit(function(event) {
+    event.preventDefault();
+    var searchString = movieSearchField.val();
+    movieSearchField.val('');
+    movieSearch(searchString);
 });
 
-$('#user-search-form').submit(function(event){
-  event.preventDefault();
-  var searchString = userSearchField.val();
-  userSearchField.val('');
-  userSearch(searchString);
+$('#user-search-form').submit(function(event) {
+    event.preventDefault();
+    var searchString = userSearchField.val();
+    userSearchField.val('');
+    userSearch(searchString);
 });
 
-$('.content').on('click', '#user-delete', function(event){
-  var userId = $('#user-id').html();
-  userId = userId.slice(9);
-  alert("Someday we will delete user " + userId + ", but not today!");
+$('.content').on('click', '#user-delete', function(event) {
+    var userId = $('#user-id').html();
+    userId = userId.slice(9);
+    alert("Someday we will delete user " + userId + ", but not today!");
+});
+
+/*event listeners for stars, collects which star clicked, id, and movie id*/
+$('.content').on('click', '#star-container', function(event) {
+  var newRating = $(event.target).attr('id');
+  var movieId = $(event.target).parents('#star-container').attr('movieId');
+  var userId = $(event.target).parents('#star-container').attr('userId');
+console.log(movieId + " " + userId + " " + newRating);
+  updateRating(newRating, userId, movieId);
 });
 
 // check for bookmarked search:
-if (window.location.hash.length > 0){
-  hashString = window.location.hash;
-  if (hashString === "#home"){
-    $('.content').empty();
-    expandSearch();
-  } else if (hashString.includes('search=')) {
-    hashString = hashString.replace('#search=','');
-    hashString = hashString.replace('#','');
-    movieSearch(hashString);
-  } else if (hashString.includes('user=')){
-    hashString = hashString.replace('#user=','');
-    hashString = hashString.replace('#','');
-    userSearch(hashString);
-  } else if (hashString.includes('movie=')){
-    hashString = hashString.replace('#movie=','');
-    hashString = hashString.replace('#','');
-    $.ajax(apiGet('movieId', hashString)).done(function(response){
-      var movie = new Movie(response);
-      collapseSearch();
-      movie.displayFull();
-    });
-  }
+if (window.location.hash.length > 0) {
+    hashString = window.location.hash;
+    if (hashString === "#home") {
+        $('.content').empty();
+        expandSearch();
+    } else if (hashString.includes('search=')) {
+        hashString = hashString.replace('#search=', '');
+        hashString = hashString.replace('#', '');
+        movieSearch(hashString);
+    } else if (hashString.includes('user=')) {
+        hashString = hashString.replace('#user=', '');
+        hashString = hashString.replace('#', '');
+        userSearch(hashString);
+    } else if (hashString.includes('movie=')) {
+        hashString = hashString.replace('#movie=', '');
+        hashString = hashString.replace('#', '');
+        $.ajax(apiGet('movieId', hashString)).done(function(response) {
+            var movie = new Movie(response);
+            collapseSearch();
+            movie.displayFull();
+        });
+    }
 }
 
 window.location.hash = "home";
