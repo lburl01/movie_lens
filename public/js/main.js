@@ -200,7 +200,7 @@ Movie.prototype = {
                 template = Handlebars.compile(source);
                 context = {
                     userId: ratingObj.user_id,
-                    userScore: ratingObj.rating
+                    rating: ratingObj.rating
                 };
                 html = template(context);
                 $('#mv-user-list').append(html);
@@ -214,8 +214,11 @@ Movie.prototype = {
                         var user = new User(response);
                         user.displayUser();
                     });
-
                 });
+                var attrString = '.mv-user-score[user-Id=' + ratingObj.user_id + ']';
+
+
+                starRating($(attrString).find('#star-container'), ratingObj.rating);
             }
         }).bind(this));
 
@@ -279,26 +282,26 @@ User.prototype = {
                         movie.displayFull();
                     });
                 });
-                this.starRating($('#star-container'), context['movie-rating']);
+                starRating($('#star-container'), context['movie-rating']);
             }
             //end loop here
         }).bind(this));
     },
-    starRating: function(container, rating) {
-        if (!rating) {
-            rating = 0;
-        }
-        var count = 0;//count will number the stars as they are built.
-        for (var index = 0; index < rating; index++) {
-          count ++;
-            $('<a href="#"><i class ="star fa fa-star" id=' + count + '></i></a>').appendTo(container);
-        }
-        for (index = 0; index < 5 - rating; index++) {
-          count ++;
-            $('<a href="#"><i class ="star fa fa-star-o" id=' + count + '></i></a>').appendTo(container);
-        }
-
-    },
+    // starRating: function(container, rating) {
+    //     if (!rating) {
+    //         rating = 0;
+    //     }
+    //     var count = 0;//count will number the stars as they are built.
+    //     for (var index = 0; index < rating; index++) {
+    //       count ++;
+    //         $('<a href="#"><i class ="star fa fa-star" id=' + count + '></i></a>').appendTo(container);
+    //     }
+    //     for (index = 0; index < 5 - rating; index++) {
+    //       count ++;
+    //         $('<a href="#"><i class ="star fa fa-star-o" id=' + count + '></i></a>').appendTo(container);
+    //     }
+    //     return rating;
+    // },
 
     editUser: function() {
         $('#edit-user-div').empty();
@@ -343,7 +346,6 @@ are collected from parent containers of the star. */
 function updateRating(newRating, id, movie) {
   var timestamp = new Date();
   var query = id + "&" + movie;
-  console.log(query);
   var RatingObj = {
     "user_id": id,
     "movie_id": movie,
@@ -355,6 +357,23 @@ function updateRating(newRating, id, movie) {
     alert("I bet you'd like to update this rating...not yet.");
   });
 }
+
+function starRating (container, rating) {
+    if (!rating) {
+        rating = 0;
+    }
+    var count = 0;//count will number the stars as they are built.
+    for (var index = 0; index < rating; index++) {
+      count ++;
+        $('<a href="#"><i class ="star fa fa-star" id=' + count + '></i></a>').appendTo(container);
+    }
+    for (index = 0; index < 5 - rating; index++) {
+      count ++;
+        $('<a href="#"><i class ="star fa fa-star-o" id=' + count + '></i></a>').appendTo(container);
+    }
+    return rating;
+}
+
 
 // LAUNCH CODE:
 

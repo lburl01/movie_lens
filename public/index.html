@@ -74,7 +74,7 @@
         <div class="movie-body">
             <ul id="mv-user-list">
                 <li class="mv-user list-head">
-                    <span>User Name:</span><span>Rating:</span>
+                    <span>User:</span><span>Rating:</span>
                 </li>
             </ul>
         </div>
@@ -85,7 +85,11 @@
     <script id="user-table-item" type="text/x-handlebars-template">
         <li class="mv-user">
             <span class="mv-user-name" user-Id="{{userId}}"><a href="#">{{userId}}</a></span>
-            <span class="mv-user-score">{{userScore}}</span>
+            <span class="mv-user-score" user-Id="{{userId}}">
+              <span id="star-container" movieId="{{movieId}}">
+
+              </span>
+            </span>
         </li>
       </script>
 
