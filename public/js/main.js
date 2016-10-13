@@ -18,7 +18,6 @@ function apiGet(queryType, query, dataObject) {
     var endPoint;
     var method = "GET";
     dataObject = (!dataObject) ? {} : dataObject;
-    console.log(dataObject);
     query = (!query) ? '' : query;
     switch (queryType) { // query dictionary
         case 'movieTitle': // Search Method
@@ -53,7 +52,7 @@ function apiGet(queryType, query, dataObject) {
             break;
         case 'updateRating': // change existing rating
             method = "PUT";
-            endPoint = '/api/update_rating' + query;
+            endPoint = '/api/update_rating';
             break;
         default:
             endPoint = null;
@@ -68,8 +67,6 @@ function apiGet(queryType, query, dataObject) {
         error: handleError,
         data: dataObject,
     };
-    console.log("after apiGet");
-    console.log(settings);
     return settings;
 }
 
@@ -94,7 +91,6 @@ function userSearch(string) {
     collapseSearch();
     $('.content').empty();
     $.ajax(apiGet('userId', string)).done(function(response) {
-        console.log(JSON.stringify(response));
         var thisUser = new User(response);
         thisUser.displayUser();
     });
@@ -295,11 +291,11 @@ User.prototype = {
         var count = 0;//count will number the stars as they are built.
         for (var index = 0; index < rating; index++) {
           count ++;
-            $('<i class ="star fa fa-star" id=' + count + '></i>').appendTo(container);
+            $('<a href="#"><i class ="star fa fa-star" id=' + count + '></i></a>').appendTo(container);
         }
         for (index = 0; index < 5 - rating; index++) {
           count ++;
-            $('<i class ="star fa fa-star-o" id=' + count + '></i>').appendTo(container);
+            $('<a href="#"><i class ="star fa fa-star-o" id=' + count + '></i></a>').appendTo(container);
         }
 
     },
@@ -346,10 +342,8 @@ User.prototype = {
 are collected from parent containers of the star. */
 function updateRating(newRating, id, movie) {
   var timestamp = new Date();
-  var query = {
-    "user_id": id,
-    "movie_id": movie
-  };
+  var query = id + "&" + movie;
+  console.log(query);
   var RatingObj = {
     "user_id": id,
     "movie_id": movie,
@@ -450,6 +444,7 @@ $('.content').on('click', '#user-delete', function(event) {
 
 /*event listeners for stars, collects which star clicked, id, and movie id*/
 $('.content').on('click', '#star-container', function(event) {
+  event.preventDefault();
   var newRating = $(event.target).attr('id');
   var movieId = $(event.target).parents('#star-container').attr('movieId');
   var userId = $(event.target).parents('#star-container').attr('userId');
